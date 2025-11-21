@@ -488,6 +488,217 @@ draw_gauge() {
 }
 
 # ============================================================================
+# ADVANCED VISUALIZATIONS
+# ============================================================================
+
+# Horizontal bar chart with scale
+draw_horizontal_bar_chart() {
+  local -n data=$1
+  local -n labels=$2
+  local title=$3
+  local max_width=${4:-40}
+  local unit=${5:-""}
+
+  # Find max value
+  local max_val=0
+  for val in "${data[@]}"; do
+    ((val > max_val)) && max_val=$val
+  done
+
+  echo -e "\n${BOLD}${ACCENT_LAVENDER}$title${RESET}"
+
+  # Draw bars
+  for i in "${!data[@]}"; do
+    local value=${data[$i]}
+    local label=${labels[$i]}
+    local bar_width=$(( value * max_width / max_val ))
+    local percent=$(( value * 100 / max_val ))
+    local bar=$(printf "%${bar_width}s" | tr ' ' "$BLOCK_FULL")
+    local empty=$(( max_width - bar_width ))
+    local empty_bar=$(printf "%${empty}s" | tr ' ' ' ')
+
+    printf "  [%-8s] ${NEON_CYAN}${bar}${RESET}${empty_bar} %s%s (%d%%)\n" \
+      "$label" "$value" "$unit" "$percent"
+  done
+
+  # Draw scale
+  printf "            ${FG_GRAY}|"
+  for ((i=0; i<=max_width; i+=10)); do
+    printf "----------|"
+  done
+  echo -e "${RESET}"
+  printf "            ${FG_GRAY}"
+  for ((i=0; i<=max_val; i+=$(( max_val / 4 )))); do
+    printf "%-10s" "$i$unit"
+  done
+  echo -e "${RESET}\n"
+}
+
+# Vertical bar chart
+draw_vertical_bar_chart() {
+  local -n data=$1
+  local -n labels=$2
+  local title=$3
+  local max_height=${4:-10}
+
+  # Find max value
+  local max_val=0
+  for val in "${data[@]}"; do
+    ((val > max_val)) && max_val=$val
+  done
+
+  echo -e "\n${BOLD}${ACCENT_LAVENDER}$title${RESET}\n"
+
+  # Draw from top to bottom
+  for ((row=max_height; row>=0; row--)); do
+    local threshold=$(( row * max_val / max_height ))
+    printf "${FG_GRAY}%4s ┤${RESET} " "$threshold"
+
+    for i in "${!data[@]}"; do
+      local value=${data[$i]}
+      local scaled=$(( value * max_height / max_val ))
+
+      if ((scaled >= row)); then
+        printf "${NEON_CYAN}█${RESET} "
+      else
+        printf "  "
+      fi
+    done
+    echo ""
+  done
+
+  # X-axis
+  printf "${FG_GRAY}   0 └"
+  for i in "${!data[@]}"; do
+    printf "─┴"
+  done
+  echo -e "${RESET}"
+
+  # Labels
+  printf "      "
+  for label in "${labels[@]}"; do
+    printf "%-8s" "$label"
+  done
+  echo -e "\n"
+}
+
+# Heatmap for activity
+draw_activity_heatmap() {
+  local title=$1
+  local -n matrix=$2  # 2D array: matrix[row][col]
+
+  echo -e "\n${BOLD}${ACCENT_LAVENDER}$title${RESET}\n"
+
+  local days=("Mon" "Tue" "Wed" "Thu" "Fri" "Sat" "Sun")
+  local hours=("00" "03" "06" "09" "12" "15" "18" "21")
+
+  # Header
+  printf "     "
+  for hour in "${hours[@]}"; do
+    printf " %-3s" "$hour"
+  done
+  echo ""
+
+  printf "    ${FG_GRAY}┌"
+  for ((i=0; i<${#hours[@]}; i++)); do
+    printf "───┬"
+  done
+  echo -e "───┐${RESET}"
+
+  # Rows
+  for day_idx in "${!days[@]}"; do
+    printf "${FG_GRAY}%-3s │${RESET}" "${days[$day_idx]}"
+
+    for hour_idx in "${!hours[@]}"; do
+      # Get value (0-4 scale)
+      local val=${matrix[$day_idx * ${#hours[@]} + $hour_idx]:-0}
+
+      local char
+      case $val in
+        0) char="${FG_GRAY}·${RESET}" ;;
+        1) char="${NEON_GREEN}${SHADE_LIGHT}${RESET}" ;;
+        2) char="${NEON_CYAN}${SHADE_MEDIUM}${RESET}" ;;
+        3) char="${NEON_ORANGE}${SHADE_DARK}${RESET}" ;;
+        *) char="${NEON_PURPLE}${BLOCK_FULL}${RESET}" ;;
+      esac
+
+      printf " %s ${FG_GRAY}│${RESET}" "$char"
+    done
+    echo ""
+  done
+
+  printf "    ${FG_GRAY}└"
+  for ((i=0; i<${#hours[@]}; i++)); do
+    printf "───┴"
+  done
+  echo -e "───┘${RESET}"
+
+  echo -e "    ${FG_GRAY}Legend: · None  ${NEON_GREEN}${SHADE_LIGHT}${RESET} Low  ${NEON_CYAN}${SHADE_MEDIUM}${RESET} Med  ${NEON_ORANGE}${SHADE_DARK}${RESET} High  ${NEON_PURPLE}${BLOCK_FULL}${RESET} Peak${RESET}\n"
+}
+
+# Multi-line chart
+draw_multi_line_chart() {
+  local title=$1
+  local max_height=${2:-10}
+  # Additional data series passed as nameref arrays
+
+  echo -e "\n${BOLD}${ACCENT_LAVENDER}$title${RESET}\n"
+
+  # Example implementation - needs actual data
+  local heights=(10 9 8 7 6 5 4 3 2 1 0)
+
+  for height in "${heights[@]}"; do
+    local val=$(( height * 10 ))
+    printf "${FG_GRAY}%3s ┤${RESET} " "$val"
+
+    # Plot points (simplified)
+    for ((i=0; i<12; i++)); do
+      # Would plot actual data points here
+      printf " "
+    done
+    echo ""
+  done
+
+  printf "${FG_GRAY}  0 └"
+  for ((i=0; i<12; i++)); do
+    printf "──"
+  done
+  echo -e "${RESET}\n"
+}
+
+# System monitor style dashboard
+draw_system_monitor() {
+  local cpu=$1
+  local mem=$2
+  local disk=$3
+
+  local width=70
+  local line=$(printf "%${width}s" | tr ' ' "$BOX_H_S")
+
+  echo -e "${ACCENT_LAVENDER}${BOX_TL_S}${line}${BOX_TR_S}${RESET}"
+
+  printf "${ACCENT_LAVENDER}${BOX_V_S}${RESET} ${BOLD}SYSTEM STATUS MONITOR${RESET}"
+  printf "%$((width-22))s" ""
+  echo -e "${FG_GRAY}■ LIVE ■ $(date +%H:%M:%S)${RESET} ${ACCENT_LAVENDER}${BOX_V_S}${RESET}"
+
+  echo -e "${ACCENT_LAVENDER}${BOX_VR_S}${line}${BOX_VL_S}${RESET}"
+
+  # CPU
+  draw_progress_bar $cpu 50 "CPU" false
+  printf "  ${FG_GRAY}Temperature: 52°C${RESET}\n"
+
+  # Memory
+  draw_progress_bar $mem 50 "Memory" false
+  printf "  ${FG_GRAY}Available: 3.2GB${RESET}\n"
+
+  # Disk
+  draw_progress_bar $disk 50 "Disk" false
+  printf "  ${FG_GRAY}I/O: 125 MB/s${RESET}\n"
+
+  echo -e "${ACCENT_LAVENDER}${BOX_BL_S}${line}${BOX_BR_S}${RESET}\n"
+}
+
+# ============================================================================
 # EXPORT FUNCTIONS
 # ============================================================================
 
@@ -501,6 +712,11 @@ export -f draw_bar_chart
 export -f draw_progress_bar
 export -f draw_sparkline
 export -f draw_metric_card
+export -f draw_horizontal_bar_chart
+export -f draw_vertical_bar_chart
+export -f draw_activity_heatmap
+export -f draw_multi_line_chart
+export -f draw_system_monitor
 export -f draw_status_badge
 export -f draw_header
 export -f draw_table_header
