@@ -39,9 +39,9 @@
 
 ## 📸 Visual Experience
 
-> **Note:** Code blocks below are monochrome (GitHub limitation). For COLORFUL screenshots with actual terminal colors (Catppuccin/Gruvbox/Tokyo Night palettes), run `demos/generate-screenshots.sh` or see [docs/GENERATE-COLORFUL-SCREENSHOTS.md](docs/GENERATE-COLORFUL-SCREENSHOTS.md).
-
 ### 1. Dashboard Overview - Executive View
+
+<img src="screenshots/dashboard-colored-1.png" alt="Colorful PSA Dashboard" width="100%"/>
 ```
 ╔══════════════════════════════════════════════════════════════════════════════╗
 ║                         PSA - PROJECT STATE AGENT                             ║
@@ -114,6 +114,9 @@
 <p align="center"><em>Detailed metrics with trend indicators and quick actions</em></p>
 
 ### 2. Token Usage Analysis - Horizontal Bar Chart with Scale
+
+<img src="screenshots/token-usage-chart.png" alt="Colorful Token Usage Chart" width="100%"/>
+
 ```
 Token Usage by Project (Claude Code)
 
@@ -130,6 +133,9 @@ Total: 21.4M tokens  •  Average: 720 tokens/line  •  Est. Cost: $214
 <p align="center"><em>Horizontal bar chart with precise scales and percentages</em></p>
 
 ### 3. Commit Activity Heatmap - GitHub-Style
+
+<img src="screenshots/heatmap-activity.png" alt="Colorful Activity Heatmap" width="100%"/>
+
 ```
 Commit Activity Heatmap (Last 7 Days × 8 Time Blocks)
 
