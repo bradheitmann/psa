@@ -140,12 +140,11 @@ show_overview() {
 # ============================================================================
 
 show_project_list_fzf() {
-  local selected=$(jq -r '.projects[] |
-    "\(.name)|\(.status)|\(.progress // 0)%|\(.metrics.loc // \"N/A\")|\(.github // \"none\")"' "$REGISTRY_FILE" \
+  local selected=$(jq -r '.projects[] | "\(.name)|\(.status)|\(.progress // 0)%|\(.metrics.loc // 0)|\(.github // "none")"' "$REGISTRY_FILE" \
     | column -t -s'|' \
     | fzf --ansi \
-          --header="$(echo -e "${BOLD}${ACCENT_LAVENDER}Select Project${RESET}")" \
-          --preview="jq '.projects[] | select(.name==\"{1}\")' $REGISTRY_FILE | bat --style=plain --language=json --color=always" \
+          --header="Select Project" \
+          --preview="jq '.projects[] | select(.name==\"{1}\")' $REGISTRY_FILE" \
           --preview-window=right:50%:wrap \
     | awk '{print $1}')
 
