@@ -19,13 +19,13 @@
 
 ### Core Commands
 ```bash
-psa                       # Show interactive dashboard
-psa dash                  # Show dashboard (explicit)
-psa scan                  # Scan projects and rebuild registry
-psa list                  # List all projects (table format)
-psa show <project>        # Show detailed project view
-psa help                  # Show help message
-psa version               # Show version
+psa_dash                       # Show interactive dashboard
+psa_dash dash                  # Show dashboard (explicit)
+psa_dash scan                  # Scan projects and rebuild registry
+psa_dash list                  # List all projects (table format)
+psa_dash show <project>        # Show detailed project view
+psa_dash help                  # Show help message
+psa_dash version               # Show version
 ```
 
 ### Project Commands
@@ -64,9 +64,9 @@ psa:update                # Update PSA to latest version
 
 ### Examples
 ```bash
-psa                       # Open colorful dashboard
-psa list                  # Quick project list
-psa show o_bot            # View o_bot project details
+psa_dash                       # Open colorful dashboard
+psa_dash list                  # Quick project list
+psa_dash show o_bot            # View o_bot project details
 psa:init my-app           # Initialize new project
 psa:pm:review story-13    # Create PM review template
 psa:analyze:tokens        # View token usage report

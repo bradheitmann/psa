@@ -245,7 +245,7 @@ Track personal projects with beautiful visualizations better than plain `git log
 ```bash
 psa              # See all your projects
 psa:init my-app  # Start tracking
-psa list         # Quick overview
+psa_dash list         # Quick overview
 ```
 
 ---
@@ -256,7 +256,7 @@ psa list         # Quick overview
 Manage multiple microservices/repos in one unified dashboard.
 
 ```bash
-psa scan         # Discover all repos
+psa_dash scan         # Discover all repos
 psa              # Team overview
 psa show api     # Check service status
 ```
@@ -300,7 +300,7 @@ Creates `PROJECT.json` with metadata:
 ### 2. Scan Your Projects
 
 ```bash
-psa scan
+psa_dash scan
 ```
 
 Discovers all projects in `~/projects` and `~/work`.
@@ -310,7 +310,7 @@ Discovers all projects in `~/projects` and `~/work`.
 ### 3. View Dashboard
 
 ```bash
-psa
+psa_dash
 ```
 
 Beautiful, colorful overview of all your projects!
@@ -321,7 +321,7 @@ Beautiful, colorful overview of all your projects!
 
 ```bash
 psa help                # Full command list
-psa list                # List all projects
+psa_dash list                # List all projects
 psa show my-app         # Project details
 psa:analyze:tokens      # AI metrics (if using Claude Code)
 ```
@@ -454,7 +454,7 @@ psa show flask-api
   ├── website/         # Regular HTML/CSS → shows basic metrics
   └── python-lib/      # Pure Python → shows coverage
 
-psa scan  # Discovers all 3
+psa_dash scan  # Discovers all 3
 psa       # Unified dashboard
 ```
 
@@ -471,8 +471,8 @@ psa       # Unified dashboard
   ├── payment-service/
   └── notification-service/
 
-psa scan  # Discovers all services
-psa list  # Quick health check
+psa_dash scan  # Discovers all services
+psa_dash list  # Quick health check
 ```
 
 **Result:** Monitor all microservices at a glance.
@@ -512,7 +512,7 @@ pytest --cov
 
 ### ✅ With PSA
 ```bash
-psa
+psa_dash
 
 # Output:
 # ╔═══════════════════════════════════╗
