@@ -194,7 +194,7 @@ echo "📚 Creating documentation..."
 
 # README.md
 cat > "$OUTPUT_DIR/README.md" <<'EOF'
-# PSA - Personal System Assistant
+# PSA - Project State Agent
 
 <p align="center">
   <img src="docs/logo.png" alt="PSA Logo" width="200"/>
@@ -421,7 +421,7 @@ RED='\033[0;31m'
 CYAN='\033[0;36m'
 NC='\033[0m'
 
-echo -e "${CYAN}🚀 PSA (Personal System Assistant) Installer v2.0.0${NC}"
+echo -e "${CYAN}🚀 PSA (Project State Agent) Installer v2.0.0${NC}"
 echo ""
 
 # [Full installer content from OPENSOURCE-PLAN.md]

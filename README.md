@@ -1,4 +1,4 @@
-# PSA - Personal System Assistant
+# PSA - Project State Agent
 
 <p align="center">
   <img src="docs/logo.png" alt="PSA Logo" width="200"/>

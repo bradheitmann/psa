@@ -13,7 +13,7 @@
 
 ---
 
-## PSA Commands (Personal System Assistant)
+## PSA Commands (Project State Agent)
 
 **Quick Reference Cheat Sheet** - All commands use `psa` or `psa:` prefix to avoid conflicts.
 
