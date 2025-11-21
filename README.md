@@ -1,261 +1,507 @@
-# PSA - Project State Agent
+# <img src="docs/logo.png" width="40" align="left"/> PSA - Project State Agent
 
 <p align="center">
-  <img src="docs/logo.png" alt="PSA Logo" width="200"/>
+  <img src="screenshots/hero-banner.png" alt="PSA Hero Banner" width="100%"/>
+</p>
+
+<h3 align="center">
+  Beautiful terminal dashboard for managing any coding project
+</h3>
+
+<p align="center">
+  Python • JavaScript • Rust • Go • Any Language<br/>
+  <strong>With or without AI</strong> • Optional Claude Code integration
 </p>
 
 <p align="center">
-  Beautiful terminal dashboard for managing <strong>any</strong> coding project with metrics, visualizations, and tracking.
-</p>
-
-<p align="center">
-  Works with Python, JavaScript, Rust, Go, and any language. <br/>
-  Optional Claude Code integration for AI-assisted development metrics.
-</p>
-
-<p align="center">
+  <a href="#quick-install">Quick Install</a> •
+  <a href="#screenshots">Screenshots</a> •
   <a href="#features">Features</a> •
-  <a href="#installation">Installation</a> •
-  <a href="#quick-start">Quick Start</a> •
-  <a href="#documentation">Documentation</a> •
-  <a href="#contributing">Contributing</a>
+  <a href="#tutorials">Tutorials</a> •
+  <a href="https://github.com/bradheitmann/psa/blob/main/docs/README-CLARIFICATION.md">Works with ANY Project</a>
+</p>
+
+<p align="center">
+  <img src="https://img.shields.io/badge/version-2.0.0-blue.svg" alt="Version"/>
+  <img src="https://img.shields.io/badge/license-MIT-green.svg" alt="License"/>
+  <img src="https://img.shields.io/badge/terminal-agnostic-purple.svg" alt="Terminal Agnostic"/>
 </p>
 
 ---
 
-## ⚠️ PSA Works with ANY Project
+<br/>
 
-**Claude Code is optional.** PSA provides beautiful project dashboards for:
-- ✅ Python, JavaScript, TypeScript, Rust, Go, Java projects
-- ✅ Solo developers or teams
-- ✅ With or without AI coding assistants
+> **For solo developers who maintain 5+ side projects simultaneously,** PSA creates a unified command center with visual progress tracking and one-keystroke navigation, **so you can context-switch between projects in seconds and know exactly where you left off** instead of spending 10 minutes every morning re-orienting yourself by running `cd`, `git status`, and `ls` across multiple directories.
 
-**Bonus:** If you use Claude Code, get enhanced metrics (tokens, agent efficiency, costs).
-
-[See full comparison →](docs/README-CLARIFICATION.md)
+<br/>
 
 ---
 
-## Features
+## 📸 Screenshots
 
-### Core Features (All Projects)
-- 🎨 **Colorful ASCII Visualizations** - Bar charts, sparklines, gauges with rich color schemes
-- 📊 **Project Metrics** - LOC, test coverage, file counts, git activity
-- 🚀 **Multi-project Overview** - Global dashboard for all your projects
-- 💾 **Git Integration** - Track commits, branches, and activity
-- 🔍 **Interactive Navigation** - Powered by fzf for fuzzy searching
-- ⚡ **Terminal-Agnostic** - Works in Warp, iTerm2, VS Code, SSH sessions
-- 🎯 **Progress Tracking** - Visual completion percentages
+### Dashboard Overview
+<img src="screenshots/dashboard-overview.png" alt="PSA Dashboard" width="100%"/>
+<p align="center"><em>Colorful ASCII dashboard with metrics, progress bars, and sparklines</em></p>
 
-### Enhanced Features (Claude Code Projects)
-- 🤖 **Token Usage Analysis** - Track AI token consumption
-- 📈 **Agent Efficiency** - Tokens per line, cost estimation
-- 📝 **PM/Dev Workflows** - Reviews, handoffs, evidence bundles
-- 💰 **Cost Tracking** - Estimate development costs
+### Project List with Interactive Search
+<img src="screenshots/project-list.png" alt="Project List" width="100%"/>
+<p align="center"><em>Fuzzy search powered by fzf with live preview</em></p>
+
+### Project Details
+<img src="screenshots/project-detail.png" alt="Project Details" width="100%"/>
+<p align="center"><em>Detailed project view with git integration and metrics</em></p>
+
+### Beautiful Visualizations
+<img src="screenshots/metrics-charts.png" alt="Metrics Charts" width="100%"/>
+<p align="center"><em>ASCII bar charts, sparklines, and progress indicators</em></p>
+
+### Quick Commands
+<img src="screenshots/commands-demo.gif" alt="Commands Demo" width="100%"/>
+<p align="center"><em>Fast, keyboard-driven workflow</em></p>
 
 ---
 
-## Screenshots
-
-[Coming soon]
-
----
-
-## Installation
-
-### Homebrew (Recommended for macOS/Linux)
+## ⚡ Quick Install
 
 ```bash
+# Homebrew (macOS/Linux)
 brew tap bradheitmann/psa
 brew install psa
-```
 
-### Manual Install
-
-```bash
+# Manual install
 git clone https://github.com/bradheitmann/psa.git
-cd psa
-./install.sh
+cd psa && ./install.sh
+
+# Verify
+psa version
 ```
 
-### npm
+**That's it!** Now run `psa` to see your dashboard.
+
+---
+
+## ✨ Features
+
+<table>
+<tr>
+<td width="50%" valign="top">
+
+### 🎨 **Visual Experience**
+- Colorful ASCII visualizations
+- Bar charts, sparklines, gauges
+- Unicode box-drawing
+- Nerd Font icons
+- 3 color schemes (Gruvbox, Catppuccin, Tokyo Night)
+- Progress bars with gradients
+
+</td>
+<td width="50%" valign="top">
+
+### 🚀 **Works Everywhere**
+- Any terminal (Warp, iTerm2, VS Code, SSH)
+- macOS & Linux
+- Works with ANY language/project
+- No GUI required
+- Fast, keyboard-driven
+- Portable (XDG compliant)
+
+</td>
+</tr>
+<tr>
+<td width="50%" valign="top">
+
+### 📊 **Core Metrics** (All Projects)
+- Lines of code (LOC)
+- Test coverage %
+- File/module counts
+- Git activity tracking
+- Custom metrics support
+- Progress percentages
+
+</td>
+<td width="50%" valign="top">
+
+### 🤖 **AI Enhanced** (Optional)
+- Token usage tracking
+- Agent efficiency (tokens/line)
+- Cost estimation
+- PM review templates
+- Dev handoff workflows
+- Evidence bundles
+
+</td>
+</tr>
+<tr>
+<td width="50%" valign="top">
+
+### 🔍 **Interactive**
+- Fuzzy search (fzf)
+- Live JSON previews
+- File browsing (yazi)
+- Git diffs (delta)
+- Syntax highlighting (bat)
+- Tab completion ready
+
+</td>
+<td width="50%" valign="top">
+
+### 📁 **Multi-Project**
+- Global overview dashboard
+- Track unlimited projects
+- Per-project metrics
+- Cross-project analytics
+- Auto-discovery
+- Workspace support
+
+</td>
+</tr>
+</table>
+
+---
+
+## 🎯 Use Cases
+
+### For Solo Developers
+<img src="screenshots/use-case-solo.png" alt="Solo Dev" width="100%"/>
+
+Track personal projects with beautiful visualizations better than plain `git log`.
 
 ```bash
-npm install -g @bradheitmann/psa
-```
-
-### One-liner
-
-```bash
-curl -fsSL https://raw.githubusercontent.com/bradheitmann/psa/main/install.sh | bash
+psa              # See all your projects
+psa:init my-app  # Start tracking
+psa list         # Quick overview
 ```
 
 ---
 
-## Quick Start
+### For Team Leads
+<img src="screenshots/use-case-team.png" alt="Team Lead" width="100%"/>
 
-### For Any Project
+Manage multiple microservices/repos in one unified dashboard.
 
 ```bash
-# Navigate to your project
+psa scan         # Discover all repos
+psa              # Team overview
+psa show api     # Check service status
+```
+
+---
+
+### For AI-Assisted Development
+<img src="screenshots/use-case-ai.png" alt="AI Development" width="100%"/>
+
+Full token tracking, efficiency metrics, and cost estimation for Claude Code projects.
+
+```bash
+psa:analyze:tokens      # Token usage
+psa:pm:review story-13  # PM workflows
+psa:analyze:costs       # Cost breakdown
+```
+
+---
+
+## 🚦 Quick Start
+
+### 1. Initialize Your First Project
+
+```bash
 cd ~/projects/my-app
-
-# Initialize PSA tracking
 psa:init my-app
-
-# Scan all projects
-psa scan
-
-# View dashboard
-psa
 ```
 
-### With Claude Code
-
-```bash
-# Same as above, plus:
-psa:analyze:tokens        # View token usage
-psa:pm:review story-13    # Create PM review
-psa:analyze:efficiency    # Agent efficiency
-```
-
----
-
-## Configuration
-
-PSA uses `~/.psa/config.json`:
-
+Creates `PROJECT.json` with metadata:
 ```json
 {
-  "projectDirs": ["~/projects", "~/work"],
-  "dashboardTheme": "catppuccin",
-  "defaultEditor": "code"
+  "name": "my-app",
+  "status": "active",
+  "progress": 0,
+  "type": "web-app"
 }
 ```
 
-Edit with: `psa:config:edit`
+---
 
-Or manually:
+### 2. Scan Your Projects
+
 ```bash
-vim ~/.psa/config.json
+psa scan
+```
+
+Discovers all projects in `~/projects` and `~/work`.
+
+---
+
+### 3. View Dashboard
+
+```bash
+psa
+```
+
+Beautiful, colorful overview of all your projects!
+
+---
+
+### 4. Explore Commands
+
+```bash
+psa help                # Full command list
+psa list                # List all projects
+psa show my-app         # Project details
+psa:analyze:tokens      # AI metrics (if using Claude Code)
 ```
 
 ---
 
-## Documentation
+## 📚 Tutorials
 
-- [Installation Guide](docs/installation.md)
-- [Works with ANY Project](docs/README-CLARIFICATION.md) ⭐ Read this!
-- [Configuration](docs/configuration.md)
-- [Usage Guide](docs/usage.md)
-- [Contributing](CONTRIBUTING.md)
-- [Security](docs/security.md)
+**New to PSA?** Follow these step-by-step guides:
+
+1. **[Getting Started](tutorials/01-GETTING-STARTED.md)** - Your first project (5 min)
+2. **[Global Management](tutorials/02-GLOBAL-MANAGEMENT.md)** - Multi-project workflows (10 min)
+3. **[Metrics & Tracking](tutorials/03-METRICS-TRACKING.md)** - Custom metrics (15 min)
+4. **[Claude Code Integration](tutorials/04-CLAUDE-CODE.md)** - AI features (10 min)
 
 ---
 
-## Dependencies
+## 🎨 Visual Library
 
-**Required:**
-- `jq` - JSON processing
-- `git` - Version control
+PSA's colorful interface is powered by a custom visual library:
 
-**Optional (Enhanced Experience):**
-- `fzf` - Interactive fuzzy finder ⭐⭐⭐⭐⭐
-- `gum` - Modern TUI components ⭐⭐⭐⭐
-- `bat` - Syntax-highlighted viewer ⭐⭐⭐
-- `delta` - Beautiful git diffs ⭐⭐⭐
-- `eza` - Modern ls with icons ⭐⭐⭐
-- `yazi` - File manager TUI ⭐⭐⭐
-- `figlet` - ASCII art text ⭐⭐
-- `lolcat` - Rainbow colorizer ⭐⭐
-- `gnuplot` - Terminal charts ⭐⭐⭐
+### Color Schemes
+- **Gruvbox** - Warm, retro colors
+- **Catppuccin** - Modern pastels
+- **Tokyo Night** - Neon cyberpunk
 
-Install all:
+### ASCII Art Elements
+- ✅ Bar charts (horizontal & vertical)
+- ✅ Sparklines (inline mini-charts)
+- ✅ Progress bars with gradients
+- ✅ Gauges (circular indicators)
+- ✅ Unicode box-drawing
+- ✅ Nerd Font icons (30+ icons)
+
+<img src="screenshots/visual-library.png" alt="Visual Library" width="100%"/>
+
+---
+
+## 🛠️ Configuration
+
+PSA is highly customizable via `~/.psa/config.json`:
+
+```json
+{
+  "version": "2.0.0",
+  "projectDirs": [
+    "~/projects",
+    "~/work",
+    "~/open-source"
+  ],
+  "dashboardTheme": "catppuccin",
+  "toolsCheck": true,
+  "updateCheckEnabled": true,
+  "defaultEditor": "code",
+  "excludeDirs": [
+    "node_modules",
+    ".git",
+    "vendor",
+    "dist"
+  ]
+}
+```
+
+**Edit:**
+```bash
+psa:config:edit
+```
+
+---
+
+## 📦 Dependencies
+
+### Required
+- ✅ `jq` - JSON processing
+- ✅ `git` - Version control
+
+### Optional (Enhanced Experience)
+
+| Tool | Purpose | Impact |
+|------|---------|--------|
+| `fzf` | Fuzzy search | ⭐⭐⭐⭐⭐ |
+| `gum` | TUI components | ⭐⭐⭐⭐ |
+| `bat` | Syntax highlighting | ⭐⭐⭐ |
+| `delta` | Git diffs | ⭐⭐⭐ |
+| `eza` | Modern ls | ⭐⭐⭐ |
+| `yazi` | File manager | ⭐⭐⭐ |
+| `figlet` | ASCII art | ⭐⭐ |
+| `lolcat` | Rainbow colors | ⭐⭐ |
+| `gnuplot` | Charts | ⭐⭐⭐ |
+
+**Install all:**
 ```bash
 brew install jq fzf gum bat git-delta eza yazi figlet lolcat gnuplot
 ```
 
 ---
 
-## Example: Non-AI Project
+## 🔥 Examples
+
+### Example 1: Regular Python Project (No AI)
 
 ```bash
-# Regular Python Flask project
-cd ~/projects/my-flask-app
-psa:init my-flask-app
+cd ~/projects/flask-api
+psa:init flask-api
 
-# Edit PROJECT.json with your info
+# Edit PROJECT.json
 {
-  "name": "my-flask-app",
+  "name": "flask-api",
   "status": "active",
   "progress": 60,
-  "type": "web-app"
+  "type": "web-app",
+  "tech": {
+    "languages": ["Python"],
+    "frameworks": ["Flask"]
+  }
 }
 
-# View dashboard
-psa
-
-# Output:
-# ╔═══════════════════════════╗
-# ║   my-flask-app            ║
-# ║   ● ACTIVE                ║
-# ║   Progress: ████████░░ 60%║
-# ║   LOC: 5,000              ║
-# ╚═══════════════════════════╝
+psa show flask-api
 ```
 
-**No Claude Code? No problem!** You still get beautiful visualizations.
+**Result:** Beautiful dashboard showing LOC, git commits, progress.
 
 ---
 
-## Example: Mixed Projects
+### Example 2: Mixed Projects
 
 ```bash
 ~/projects/
-  ├── ai-chatbot/      # Uses Claude Code → Shows token metrics
-  ├── website/         # Regular project → Shows basic metrics
-  └── python-lib/      # Regular project → Shows basic metrics
+  ├── ai-chatbot/      # Claude Code project → shows tokens
+  ├── website/         # Regular HTML/CSS → shows basic metrics
+  └── python-lib/      # Pure Python → shows coverage
 
 psa scan  # Discovers all 3
-psa       # Unified dashboard for all
+psa       # Unified dashboard
 ```
 
----
-
-## Use Cases
-
-### Solo Developer
-Track personal projects with beautiful visualizations better than plain git logs.
-
-### Team Lead
-Overview of multiple microservices/repos in one dashboard.
-
-### AI-Assisted Development
-Full token tracking, efficiency metrics, and cost estimation for Claude Code projects.
-
-### Open Source Maintainer
-Track contributions, LOC growth, and project health across multiple repos.
+**Result:** One dashboard for ALL projects, AI or not.
 
 ---
 
-## Contributing
+### Example 3: Team Microservices
 
-Contributions are welcome! Please read [CONTRIBUTING.md](CONTRIBUTING.md).
+```bash
+~/work/
+  ├── api-gateway/
+  ├── auth-service/
+  ├── payment-service/
+  └── notification-service/
+
+psa scan  # Discovers all services
+psa list  # Quick health check
+```
+
+**Result:** Monitor all microservices at a glance.
 
 ---
 
-## License
+## 🎬 Demo Videos
+
+### Quick Tour (2 min)
+[![Quick Tour](screenshots/video-thumb-tour.png)](demos/tour.gif)
+
+### Features Deep Dive (5 min)
+[![Features](screenshots/video-thumb-features.png)](demos/features.gif)
+
+### Claude Code Integration (3 min)
+[![Claude Code](screenshots/video-thumb-claude.png)](demos/claude-integration.gif)
+
+---
+
+## 🌟 Why PSA?
+
+### ❌ Before PSA
+```bash
+# Jump between projects manually
+cd ~/projects/app1 && git status
+cd ~/projects/app2 && git status
+cd ~/projects/app3 && git status
+
+# Count LOC with wc
+find . -name "*.py" | xargs wc -l
+
+# Check test coverage
+pytest --cov
+
+# Track progress... in your head?
+```
+
+### ✅ With PSA
+```bash
+psa
+
+# Output:
+# ╔═══════════════════════════════════╗
+# ║  3 ACTIVE PROJECTS                ║
+# ║  ██████████████░░░░░░  65% avg    ║
+# ║  25K total LOC                    ║
+# ║  82% average coverage             ║
+# ╚═══════════════════════════════════╝
+```
+
+**One command. Beautiful visualization. All projects.**
+
+---
+
+## 🤝 Contributing
+
+Contributions are welcome!
+
+1. Fork the repository
+2. Create a feature branch (`git checkout -b feature/amazing`)
+3. Commit changes (`git commit -m 'Add amazing feature'`)
+4. Push to branch (`git push origin feature/amazing`)
+5. Open a Pull Request
+
+See [CONTRIBUTING.md](CONTRIBUTING.md) for guidelines.
+
+---
+
+## 📄 License
 
 MIT License - see [LICENSE](LICENSE)
 
----
-
-## Acknowledgments
-
-- Inspired by modern CLI tools: `starship`, `bat`, `eza`
-- Works with any coding workflow (AI or traditional)
-- Built with love for terminal enthusiasts
+Free to use, modify, and distribute.
 
 ---
 
-**Made with ❤️ for developers who love the command line**
+## 🙏 Acknowledgments
+
+**Built with:**
+- [Charm](https://charm.sh/) tools (gum, glow, vhs)
+- [fzf](https://github.com/junegunn/fzf) - Fuzzy finder
+- [jq](https://stedolan.github.io/jq/) - JSON processor
+- Inspired by: `starship`, `bat`, `eza`, `btop`
+
+**Special thanks to:**
+- Claude Code for AI-assisted development
+- Terminal enthusiasts worldwide
+- Open source community
+
+---
+
+## 📞 Support
+
+- **Documentation:** [docs/](docs/)
+- **Issues:** [GitHub Issues](https://github.com/bradheitmann/psa/issues)
+- **Discussions:** [GitHub Discussions](https://github.com/bradheitmann/psa/discussions)
+
+---
+
+<p align="center">
+  <strong>Made with ❤️ for developers who love the command line</strong>
+</p>
+
+<p align="center">
+  <a href="#quick-install">Get Started</a> •
+  <a href="tutorials/01-GETTING-STARTED.md">Tutorial</a> •
+  <a href="https://github.com/bradheitmann/psa">Star on GitHub ⭐</a>
+</p>
