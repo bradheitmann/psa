@@ -210,15 +210,19 @@ draw_box_footer() {
 # ============================================================================
 
 draw_bar_chart() {
-  local -n data=$1  # Array of values
-  local -n labels=$2  # Array of labels
+  local data_name=$1
+  local labels_name=$2
   local max_width=${3:-50}
   local title=${4:-"Chart"}
   local color=${5:-$NEON_CYAN}
 
+  # Get arrays using eval (bash 3.x compatible)
+  eval "local data_array=(\"\${${data_name}[@]}\")"
+  eval "local labels_array=(\"\${${labels_name}[@]}\")"
+
   # Find max value for scaling
   local max_val=0
-  for val in "${data[@]}"; do
+  for val in "${data_array[@]}"; do
     ((val > max_val)) && max_val=$val
   done
 
@@ -226,9 +230,9 @@ draw_bar_chart() {
   echo -e "\n${BOLD}${ACCENT_LAVENDER}${title}${RESET}\n"
 
   # Draw bars
-  for i in "${!data[@]}"; do
-    local value=${data[$i]}
-    local label=${labels[$i]}
+  for i in "${!data_array[@]}"; do
+    local value=${data_array[$i]}
+    local label=${labels_array[$i]}
     local bar_width=$(( value * max_width / max_val ))
     local bar=$(printf "%${bar_width}s" | tr ' ' "$BLOCK_FULL")
 
@@ -279,13 +283,16 @@ draw_progress_bar() {
 # ============================================================================
 
 draw_sparkline() {
-  local -n values=$1
+  local values_name=$1
   local color=${2:-$NEON_CYAN}
 
+  # Get array using eval (bash 3.x compatible)
+  eval "local values_array=(\"\${${values_name}[@]}\")"
+
   # Find min/max for scaling
-  local min=${values[0]}
-  local max=${values[0]}
-  for val in "${values[@]}"; do
+  local min=${values_array[0]}
+  local max=${values_array[0]}
+  for val in "${values_array[@]}"; do
     ((val < min)) && min=$val
     ((val > max)) && max=$val
   done
@@ -297,7 +304,7 @@ draw_sparkline() {
   local chars=("$BLOCK_ONE" "$BLOCK_TWO" "$BLOCK_THREE" "$BLOCK_FOUR" "$BLOCK_FIVE" "$BLOCK_SIX" "$BLOCK_SEVEN" "$BLOCK_FULL")
 
   echo -n "${color}"
-  for val in "${values[@]}"; do
+  for val in "${values_array[@]}"; do
     local normalized=$(( (val - min) * 7 / range ))
     echo -n "${chars[$normalized]}"
   done
@@ -318,14 +325,16 @@ draw_metric_card() {
 
   local width=30
   local line=$(printf "%${width}s" | tr ' ' "$BOX_H_S")
+  local label_width=$((width-5))
+  local value_width=$((width-4))
 
   echo -e "${color}${BOX_TL_S}${line}${BOX_TR_S}${RESET}"
   printf "${color}${BOX_V_S}${RESET} "
-  printf "${color}${BOLD}${icon}${RESET}  ${FG_GRAY}%-${((width-5))}s${RESET}" "$label"
+  printf "${color}${BOLD}${icon}${RESET}  ${FG_GRAY}%-${label_width}s${RESET}" "$label"
   echo -e " ${color}${BOX_V_S}${RESET}"
 
   printf "${color}${BOX_V_S}${RESET}  "
-  printf "${BOLD}${color}%-${((width-4))}s${RESET}" "${value}${unit}"
+  printf "${BOLD}${color}%-${value_width}s${RESET}" "${value}${unit}"
   if [[ -n "$trend" ]]; then
     echo -ne " ${trend}"
   fi
@@ -395,15 +404,21 @@ draw_header() {
 # ============================================================================
 
 draw_table_header() {
-  local -n headers=$1
-  local -n widths=$2
+  local headers_name=$1
+  local widths_name=$2
   local color=${3:-$ACCENT_LAVENDER}
+
+  # Get arrays using eval (bash 3.x compatible)
+  eval "local headers_array=(\"\${${headers_name}[@]}\")"
+  eval "local widths_array=(\"\${${widths_name}[@]}\")"
 
   # Top border
   echo -n "${color}${BOX_TL}${RESET}"
-  for i in "${!headers[@]}"; do
-    printf "${color}%${widths[$i]}s${RESET}" | tr ' ' "$BOX_H"
-    if [[ $i -lt $((${#headers[@]} - 1)) ]]; then
+  for i in "${!headers_array[@]}"; do
+    local w=${widths_array[$i]}
+    printf "${color}%${w}s${RESET}" | tr ' ' "$BOX_H"
+    local headers_len=${#headers_array[@]}
+    if [[ $i -lt $((headers_len - 1)) ]]; then
       echo -n "${color}${BOX_HD}${RESET}"
     fi
   done
@@ -411,16 +426,20 @@ draw_table_header() {
 
   # Header row
   echo -n "${color}${BOX_V}${RESET}"
-  for i in "${!headers[@]}"; do
-    printf " ${BOLD}%-$((widths[$i]-2))s${RESET} ${color}${BOX_V}${RESET}" "${headers[$i]}"
+  for i in "${!headers_array[@]}"; do
+    local w=${widths_array[$i]}
+    local w_minus_2=$((w-2))
+    printf " ${BOLD}%-${w_minus_2}s${RESET} ${color}${BOX_V}${RESET}" "${headers_array[$i]}"
   done
   echo ""
 
   # Separator
   echo -n "${color}${BOX_VR}${RESET}"
-  for i in "${!headers[@]}"; do
-    printf "${color}%${widths[$i]}s${RESET}" | tr ' ' "$BOX_H"
-    if [[ $i -lt $((${#headers[@]} - 1)) ]]; then
+  for i in "${!headers_array[@]}"; do
+    local w=${widths_array[$i]}
+    printf "${color}%${w}s${RESET}" | tr ' ' "$BOX_H"
+    local headers_len=${#headers_array[@]}
+    if [[ $i -lt $((headers_len - 1)) ]]; then
       echo -n "${color}${BOX_PLUS}${RESET}"
     fi
   done
@@ -428,25 +447,36 @@ draw_table_header() {
 }
 
 draw_table_row() {
-  local -n cols=$1
-  local -n widths=$2
+  local cols_name=$1
+  local widths_name=$2
   local color=${3:-$ACCENT_LAVENDER}
 
+  # Get arrays using eval (bash 3.x compatible)
+  eval "local cols_array=(\"\${${cols_name}[@]}\")"
+  eval "local widths_array=(\"\${${widths_name}[@]}\")"
+
   echo -n "${color}${BOX_V}${RESET}"
-  for i in "${!cols[@]}"; do
-    printf " %-$((widths[$i]-2))s ${color}${BOX_V}${RESET}" "${cols[$i]}"
+  for i in "${!cols_array[@]}"; do
+    local w=${widths_array[$i]}
+    local w_minus_2=$((w-2))
+    printf " %-${w_minus_2}s ${color}${BOX_V}${RESET}" "${cols_array[$i]}"
   done
   echo ""
 }
 
 draw_table_footer() {
-  local -n widths=$1
+  local widths_name=$1
   local color=${2:-$ACCENT_LAVENDER}
 
+  # Get array using eval (bash 3.x compatible)
+  eval "local widths_array=(\"\${${widths_name}[@]}\")"
+
   echo -n "${color}${BOX_BL}${RESET}"
-  for i in "${!widths[@]}"; do
-    printf "${color}%${widths[$i]}s${RESET}" | tr ' ' "$BOX_H"
-    if [[ $i -lt $((${#widths[@]} - 1)) ]]; then
+  for i in "${!widths_array[@]}"; do
+    local w=${widths_array[$i]}
+    printf "${color}%${w}s${RESET}" | tr ' ' "$BOX_H"
+    local widths_len=${#widths_array[@]}
+    if [[ $i -lt $((widths_len - 1)) ]]; then
       echo -n "${color}${BOX_HU}${RESET}"
     fi
   done
