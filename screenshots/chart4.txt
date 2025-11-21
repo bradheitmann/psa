@@ -1,0 +1,17 @@
+Lines of Code Growth (Last 6 Quarters)
+
+22K ┤                                             █
+20K ┤                                    █        █
+18K ┤                           █        █        █
+16K ┤                  █        █        █        █
+14K ┤                  █        █        █        █
+12K ┤         █        █        █        █        █
+10K ┤         █        █        █        █        █
+ 8K ┤   █     █        █        █        █        █
+ 6K ┤   █     █        █        █        █        █
+ 4K ┤   █     █        █        █        █        █
+ 2K ┤   █     █        █        █        █        █
+  0 └───┴─────┴────────┴────────┴────────┴────────┴
+    Q3'23  Q4'23   Q1'24   Q2'24   Q3'24   Q4'24
+
+Growth rate: +312% year-over-year  •  Velocity: ▲ Increasing

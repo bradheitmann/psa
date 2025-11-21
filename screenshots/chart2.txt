@@ -1,0 +1,11 @@
+Token Usage by Project (Claude Code)
+
+[flask-api  ] ████████████████████████████████████████ 8.5M tokens (100%)
+[react-dash ] ████████████████████                    5.2M tokens (61%)
+[mobile-app ] ███████████████░░░░░░░░░░░░░░░░░░░░░░░░ 3.8M tokens (45%)
+[rust-cli   ] ██████░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░ 2.1M tokens (25%)
+[python-lib ] █████░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░ 1.8M tokens (21%)
+              |----------|----------|----------|----------|
+              0         2M        4M        6M        8M
+
+Total: 21.4M tokens  •  Average: 720 tokens/line  •  Est. Cost: $214

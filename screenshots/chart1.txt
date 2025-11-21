@@ -1,0 +1,17 @@
+╔══════════════════════════════════════════════════════════════════════════════╗
+║                         PSA - PROJECT STATE AGENT                             ║
+╠════════════════════════════════╤═════════════════════════════════════════════╣
+║ KEY METRICS                    │ TREND ANALYSIS                              ║
+║                                │                                             ║
+║  Projects:   7    ↑2 this week │ Activity: ▂▄▅▆▇█▇▆▅▄ ↑ Positive           ║
+║  Active:     5    71% portfolio│ Progress: ▄▅▆▇████ Strong Growth           ║
+║  Total LOC:  67K  ↑8.2K added  │ Velocity: ▁▂▃▄▅▆▇███ Accelerating          ║
+║  Coverage:   82%  ↑3% improved │                                             ║
+╠════════════════════════════════╪═════════════════════════════════════════════╣
+║ STATUS BREAKDOWN               │ TOP PROJECTS BY LOC                         ║
+║                                │                                             ║
+║ Active   ████████████████ 71%  │ company-api      ██████████████████ 22K    ║
+║ Paused   ███░░░░░░░░░░░░  14%  │ mobile-app       ███████████░░░░░░ 15K     ║
+║ Complete ███░░░░░░░░░░░░  14%  │ react-dashboard  █████████░░░░░░░░ 12K     ║
+║                                │ flask-api        ██████░░░░░░░░░░░  8.5K    ║
+╚════════════════════════════════╧═════════════════════════════════════════════╝

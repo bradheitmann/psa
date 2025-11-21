@@ -41,7 +41,7 @@
 
 ### 1. Dashboard Overview - Executive View
 
-<img src="screenshots/dashboard-colored-1.png" alt="Colorful PSA Dashboard" width="100%"/>
+<img src="screenshots/chart1-dashboard.png" alt="Colorful PSA Dashboard" width="100%"/>
 ```
 ╔══════════════════════════════════════════════════════════════════════════════╗
 ║                         PSA - PROJECT STATE AGENT                             ║
@@ -115,7 +115,7 @@
 
 ### 2. Token Usage Analysis - Horizontal Bar Chart with Scale
 
-<img src="screenshots/token-usage-chart.png" alt="Colorful Token Usage Chart" width="100%"/>
+<img src="screenshots/chart2-tokens.png" alt="Colorful Token Usage Chart" width="100%"/>
 
 ```
 Token Usage by Project (Claude Code)
@@ -134,7 +134,7 @@ Total: 21.4M tokens  •  Average: 720 tokens/line  •  Est. Cost: $214
 
 ### 3. Commit Activity Heatmap - GitHub-Style
 
-<img src="screenshots/heatmap-activity.png" alt="Colorful Activity Heatmap" width="100%"/>
+<img src="screenshots/chart3-heatmap.png" alt="Colorful Activity Heatmap" width="100%"/>
 
 ```
 Commit Activity Heatmap (Last 7 Days × 8 Time Blocks)
