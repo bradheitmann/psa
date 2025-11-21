@@ -5,7 +5,12 @@
 </p>
 
 <p align="center">
-  Beautiful terminal dashboard for managing Claude Code projects with metrics, visualizations, and agent tracking.
+  Beautiful terminal dashboard for managing <strong>any</strong> coding project with metrics, visualizations, and tracking.
+</p>
+
+<p align="center">
+  Works with Python, JavaScript, Rust, Go, and any language. <br/>
+  Optional Claude Code integration for AI-assisted development metrics.
 </p>
 
 <p align="center">
@@ -18,71 +23,103 @@
 
 ---
 
+## ⚠️ PSA Works with ANY Project
+
+**Claude Code is optional.** PSA provides beautiful project dashboards for:
+- ✅ Python, JavaScript, TypeScript, Rust, Go, Java projects
+- ✅ Solo developers or teams
+- ✅ With or without AI coding assistants
+
+**Bonus:** If you use Claude Code, get enhanced metrics (tokens, agent efficiency, costs).
+
+[See full comparison →](docs/README-CLARIFICATION.md)
+
+---
+
 ## Features
 
+### Core Features (All Projects)
 - 🎨 **Colorful ASCII Visualizations** - Bar charts, sparklines, gauges with rich color schemes
-- 📊 **Real-time Project Metrics** - LOC, test coverage, agent tokens, efficiency tracking
+- 📊 **Project Metrics** - LOC, test coverage, file counts, git activity
 - 🚀 **Multi-project Overview** - Global dashboard for all your projects
 - 💾 **Git Integration** - Track commits, branches, and activity
-- 📈 **Agent Efficiency Analysis** - Monitor Claude Code sessions and token usage
 - 🔍 **Interactive Navigation** - Powered by fzf for fuzzy searching
-- 🎯 **Evidence-Based Workflow** - PM reviews, dev handoffs, automated gates
 - ⚡ **Terminal-Agnostic** - Works in Warp, iTerm2, VS Code, SSH sessions
+- 🎯 **Progress Tracking** - Visual completion percentages
+
+### Enhanced Features (Claude Code Projects)
+- 🤖 **Token Usage Analysis** - Track AI token consumption
+- 📈 **Agent Efficiency** - Tokens per line, cost estimation
+- 📝 **PM/Dev Workflows** - Reviews, handoffs, evidence bundles
+- 💰 **Cost Tracking** - Estimate development costs
+
+---
 
 ## Screenshots
 
 [Coming soon]
+
+---
 
 ## Installation
 
 ### Homebrew (Recommended for macOS/Linux)
 
 ```bash
-brew tap your-org/psa
+brew tap bradheitmann/psa
 brew install psa
-```
-
-### npm
-
-```bash
-npm install -g @psa-cli/psa
 ```
 
 ### Manual Install
 
 ```bash
-git clone https://github.com/your-org/psa.git
+git clone https://github.com/bradheitmann/psa.git
 cd psa
 ./install.sh
+```
+
+### npm
+
+```bash
+npm install -g @bradheitmann/psa
 ```
 
 ### One-liner
 
 ```bash
-curl -fsSL https://psa.dev/install.sh | bash
+curl -fsSL https://raw.githubusercontent.com/bradheitmann/psa/main/install.sh | bash
 ```
+
+---
 
 ## Quick Start
 
-```bash
-# View dashboard
-psa
+### For Any Project
 
-# Scan projects
+```bash
+# Navigate to your project
+cd ~/projects/my-app
+
+# Initialize PSA tracking
+psa:init my-app
+
+# Scan all projects
 psa scan
 
-# List all projects
-psa list
-
-# View project details
-psa show my-project
-
-# Initialize new project
-psa:init my-new-project
-
-# Create PM review
-psa:pm:review story-13
+# View dashboard
+psa
 ```
+
+### With Claude Code
+
+```bash
+# Same as above, plus:
+psa:analyze:tokens        # View token usage
+psa:pm:review story-13    # Create PM review
+psa:analyze:efficiency    # Agent efficiency
+```
+
+---
 
 ## Configuration
 
@@ -98,13 +135,23 @@ PSA uses `~/.psa/config.json`:
 
 Edit with: `psa:config:edit`
 
+Or manually:
+```bash
+vim ~/.psa/config.json
+```
+
+---
+
 ## Documentation
 
 - [Installation Guide](docs/installation.md)
+- [Works with ANY Project](docs/README-CLARIFICATION.md) ⭐ Read this!
 - [Configuration](docs/configuration.md)
 - [Usage Guide](docs/usage.md)
 - [Contributing](CONTRIBUTING.md)
 - [Security](docs/security.md)
+
+---
 
 ## Dependencies
 
@@ -128,20 +175,87 @@ Install all:
 brew install jq fzf gum bat git-delta eza yazi figlet lolcat gnuplot
 ```
 
+---
+
+## Example: Non-AI Project
+
+```bash
+# Regular Python Flask project
+cd ~/projects/my-flask-app
+psa:init my-flask-app
+
+# Edit PROJECT.json with your info
+{
+  "name": "my-flask-app",
+  "status": "active",
+  "progress": 60,
+  "type": "web-app"
+}
+
+# View dashboard
+psa
+
+# Output:
+# ╔═══════════════════════════╗
+# ║   my-flask-app            ║
+# ║   ● ACTIVE                ║
+# ║   Progress: ████████░░ 60%║
+# ║   LOC: 5,000              ║
+# ╚═══════════════════════════╝
+```
+
+**No Claude Code? No problem!** You still get beautiful visualizations.
+
+---
+
+## Example: Mixed Projects
+
+```bash
+~/projects/
+  ├── ai-chatbot/      # Uses Claude Code → Shows token metrics
+  ├── website/         # Regular project → Shows basic metrics
+  └── python-lib/      # Regular project → Shows basic metrics
+
+psa scan  # Discovers all 3
+psa       # Unified dashboard for all
+```
+
+---
+
+## Use Cases
+
+### Solo Developer
+Track personal projects with beautiful visualizations better than plain git logs.
+
+### Team Lead
+Overview of multiple microservices/repos in one dashboard.
+
+### AI-Assisted Development
+Full token tracking, efficiency metrics, and cost estimation for Claude Code projects.
+
+### Open Source Maintainer
+Track contributions, LOC growth, and project health across multiple repos.
+
+---
+
 ## Contributing
 
 Contributions are welcome! Please read [CONTRIBUTING.md](CONTRIBUTING.md).
+
+---
 
 ## License
 
 MIT License - see [LICENSE](LICENSE)
 
+---
+
 ## Acknowledgments
 
 - Inspired by modern CLI tools: `starship`, `bat`, `eza`
-- Designed for Claude Code workflows
+- Works with any coding workflow (AI or traditional)
 - Built with love for terminal enthusiasts
 
 ---
 
-**Made with ❤️ for the command line**
+**Made with ❤️ for developers who love the command line**
