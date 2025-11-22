@@ -199,6 +199,11 @@ case "$COMMAND" in
         "$SCRIPTS_DIR/canonicalize.sh" "$@"
         ;;
 
+    update|self-update)
+        check_init
+        "$SCRIPTS_DIR/update-psa.sh" "$@"
+        ;;
+
     help|--help|-h|"")
         show_help
         ;;
