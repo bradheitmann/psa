@@ -104,6 +104,13 @@ show_help() {
     echo -e "  ${GREEN}sync-protocols${RESET}"
     echo "    Copy latest protocols from ~/.psa/ to current project"
     echo ""
+    echo -e "  ${GREEN}bloat-scan${RESET}"
+    echo "    Scan project for deletable bloat and canonical candidates"
+    echo ""
+    echo -e "  ${GREEN}canonicalize${RESET} <story-name>"
+    echo "    Extract canonical examples from A-grade story"
+    echo "    Example: psa canonicalize story-05-llm-mvp"
+    echo ""
     echo -e "  ${GREEN}help${RESET}"
     echo "    Show this help message"
     echo ""
@@ -180,6 +187,16 @@ case "$COMMAND" in
     sync-protocols|sync)
         check_init
         "$SCRIPTS_DIR/sync-protocols.sh" "$@"
+        ;;
+
+    bloat-scan)
+        check_init
+        "$SCRIPTS_DIR/bloat-scan.sh" "$@"
+        ;;
+
+    canonicalize)
+        check_init
+        "$SCRIPTS_DIR/canonicalize.sh" "$@"
         ;;
 
     help|--help|-h|"")
