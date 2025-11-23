@@ -1,0 +1,408 @@
+#!/bin/bash
+# PSA Project Dashboard - Colorful TUI with ASCII visualizations
+
+# Source visual library
+source "${PSA_HOME:-${PSA_HOME:-$HOME/.psa}}/lib/visuals.sh"
+
+# Config
+REGISTRY_FILE="${PSA_HOME:-${PSA_HOME:-$HOME/.psa}}/data/projects-registry.json"
+
+# Check dependencies
+if ! command -v jq &> /dev/null; then
+  echo "❌ jq is required for PSA"
+  echo "Install: brew install jq"
+  exit 1
+fi
+
+# Tool detection
+HAS_FZF=$(command -v fzf &> /dev/null && echo "yes" || echo "no")
+HAS_GUM=$(command -v gum &> /dev/null && echo "yes" || echo "no")
+HAS_GNUPLOT=$(command -v gnuplot &> /dev/null && echo "yes" || echo "no")
+HAS_EZA=$(command -v eza &> /dev/null && echo "yes" || echo "no")
+HAS_BAT=$(command -v bat &> /dev/null && echo "yes" || echo "no")
+HAS_DELTA=$(command -v delta &> /dev/null && echo "yes" || echo "no")
+HAS_YAZI=$(command -v yazi &> /dev/null && echo "yes" || echo "no")
+
+# ============================================================================
+# DATA LOADING
+# ============================================================================
+
+load_registry() {
+  if [[ ! -f "$REGISTRY_FILE" ]]; then
+    echo "❌ Registry not found. Run: psa scan"
+    exit 1
+  fi
+  cat "$REGISTRY_FILE"
+}
+
+get_project_count() {
+  jq '.projects | length' "$REGISTRY_FILE"
+}
+
+get_active_count() {
+  jq '[.projects[] | select(.status == "active")] | length' "$REGISTRY_FILE"
+}
+
+get_total_loc() {
+  jq '[.projects[].metrics.loc // 0] | add' "$REGISTRY_FILE"
+}
+
+get_total_tokens() {
+  jq '[.projects[].metrics.tokens // 0] | add' "$REGISTRY_FILE"
+}
+
+# ============================================================================
+# OVERVIEW SCREEN
+# ============================================================================
+
+show_overview() {
+  clear
+
+  # Header
+  draw_header "PSA DASHBOARD" true
+
+  # Summary stats in cards
+  local total_projects=$(get_project_count)
+  local active_projects=$(get_active_count)
+  local total_loc=$(get_total_loc)
+  local total_tokens=$(get_total_tokens)
+
+  echo ""
+  echo -e "${BOLD}${ACCENT_LAVENDER}  PROJECT OVERVIEW${RESET}"
+  echo ""
+
+  # Metric cards in a row (simulated)
+  {
+    draw_metric_card "$ICON_PROJECT" "Total Projects" "$total_projects" "" "$NEON_CYAN"
+  } &
+  pid1=$!
+
+  {
+    draw_metric_card "$ICON_ACTIVE" "Active" "$active_projects" "" "$NEON_GREEN"
+  } &
+  pid2=$!
+
+  {
+    local loc_formatted=$(numfmt --to=si $total_loc 2>/dev/null || echo "$total_loc")
+    draw_metric_card "$ICON_CODE" "Lines of Code" "$loc_formatted" "" "$ACCENT_SAPPHIRE"
+  } &
+  pid3=$!
+
+  wait $pid1 $pid2 $pid3
+
+  echo ""
+
+  # Token usage if available
+  if ((total_tokens > 0)); then
+    local tokens_m=$((total_tokens / 1000000))
+    draw_metric_card "$ICON_BRAIN" "Total Tokens" "${tokens_m}M" "" "$ACCENT_MAUVE"
+    echo ""
+  fi
+
+  # Project status breakdown (pie chart simulation with bars)
+  echo -e "${BOLD}${ACCENT_LAVENDER}  PROJECT STATUS${RESET}"
+  echo ""
+
+  local status_active=$(jq '[.projects[] | select(.status == "active")] | length' "$REGISTRY_FILE")
+  local status_paused=$(jq '[.projects[] | select(.status == "paused")] | length' "$REGISTRY_FILE")
+  local status_complete=$(jq '[.projects[] | select(.status == "complete")] | length' "$REGISTRY_FILE")
+  local status_archived=$(jq '[.projects[] | select(.status == "archived")] | length' "$REGISTRY_FILE")
+
+  if ((status_active > 0)); then
+    draw_progress_bar $((status_active * 100 / total_projects)) 40 "Active" true
+  fi
+  if ((status_paused > 0)); then
+    draw_progress_bar $((status_paused * 100 / total_projects)) 40 "Paused" true
+  fi
+  if ((status_complete > 0)); then
+    draw_progress_bar $((status_complete * 100 / total_projects)) 40 "Complete" true
+  fi
+  if ((status_archived > 0)); then
+    draw_progress_bar $((status_archived * 100 / total_projects)) 40 "Archived" true
+  fi
+
+  echo ""
+
+  # Recent activity sparkline (if we have data)
+  echo -e "${BOLD}${ACCENT_LAVENDER}  RECENT ACTIVITY${RESET}"
+  echo "  "
+  # Mock sparkline - in real version, would show commits over time
+  local activity=(12 15 18 14 20 25 22 28 31 27 24 29)
+  echo -n "  Last 12 days: "
+  draw_sparkline activity "$NEON_GREEN"
+
+  echo ""
+  echo ""
+}
+
+# ============================================================================
+# PROJECT LIST WITH FZF/GUM
+# ============================================================================
+
+show_project_list_fzf() {
+  local selected=$(jq -r '.projects[] | "\(.name)|\(.status)|\(.progress // 0)%|\(.metrics.loc // 0)|\(.github // "none")"' "$REGISTRY_FILE" \
+    | column -t -s'|' \
+    | fzf --ansi \
+          --header="Select Project" \
+          --preview="jq '.projects[] | select(.name==\"{1}\")' $REGISTRY_FILE" \
+          --preview-window=right:50%:wrap \
+    | awk '{print $1}')
+
+  if [[ -n "$selected" ]]; then
+    show_project_detail "$selected"
+  fi
+}
+
+show_project_list_gum() {
+  local projects=$(jq -r '.projects[].name' "$REGISTRY_FILE")
+  local selected=$(echo "$projects" | gum choose --header="Select Project")
+
+  if [[ -n "$selected" ]]; then
+    show_project_detail "$selected"
+  fi
+}
+
+show_project_list_basic() {
+  echo -e "\n${BOLD}${ACCENT_LAVENDER}PROJECT LIST${RESET}\n"
+
+  # Table header
+  local headers=("Name" "Status" "Progress" "LOC" "Type")
+  local widths=(25 15 12 12 15)
+  draw_table_header headers widths "$NEON_CYAN"
+
+  # Table rows
+  jq -c '.projects[]' "$REGISTRY_FILE" | while IFS= read -r project; do
+    local name=$(echo "$project" | jq -r '.name')
+    local status=$(echo "$project" | jq -r '.status')
+    local progress=$(echo "$project" | jq -r '.progress // 0')
+    local loc=$(echo "$project" | jq -r '.metrics.loc // "N/A"')
+    local type=$(echo "$project" | jq -r '.type // "unknown"')
+
+    # Format status with color
+    local status_display
+    case "$status" in
+      "active") status_display="${NEON_GREEN}● ACTIVE${RESET}" ;;
+      "paused") status_display="${NEON_ORANGE}● PAUSED${RESET}" ;;
+      "complete") status_display="${NEON_BLUE}● COMPLETE${RESET}" ;;
+      *) status_display="${FG_GRAY}● ${status}${RESET}" ;;
+    esac
+
+    local cols=("$name" "$status_display" "${progress}%" "$loc" "$type")
+    draw_table_row cols widths "$NEON_CYAN"
+  done
+
+  # Table footer
+  draw_table_footer widths "$NEON_CYAN"
+
+  echo ""
+  echo -e "${FG_GRAY}  Press Enter to continue...${RESET}"
+  read
+}
+
+# ============================================================================
+# PROJECT DETAIL VIEW
+# ============================================================================
+
+show_project_detail() {
+  local project_name=$1
+  clear
+
+  # Load project data
+  local project=$(jq ".projects[] | select(.name==\"$project_name\")" "$REGISTRY_FILE")
+
+  if [[ -z "$project" ]]; then
+    echo "❌ Project not found: $project_name"
+    return
+  fi
+
+  # Extract fields
+  local display_name=$(echo "$project" | jq -r '.displayName // .name')
+  local status=$(echo "$project" | jq -r '.status // "unknown"')
+  local progress=$(echo "$project" | jq -r '.progress // 0')
+  local project_type=$(echo "$project" | jq -r '.type // "unknown"')
+  local path=$(echo "$project" | jq -r '.path')
+  local github=$(echo "$project" | jq -r '.github // "N/A"')
+
+  # Metrics
+  local loc=$(echo "$project" | jq -r '.metrics.loc // 0')
+  local coverage=$(echo "$project" | jq -r '.metrics.coverage // 0')
+  local sessions=$(echo "$project" | jq -r '.metrics.sessions // 0')
+  local tokens=$(echo "$project" | jq -r '.metrics.tokens // 0')
+
+  # Header
+  echo ""
+  draw_header "$display_name" false
+  echo ""
+
+  # Status badge
+  echo -n "  "
+  draw_status_badge "$status"
+  echo ""
+  echo ""
+
+  # Info section
+  echo -e "${BOLD}${ACCENT_LAVENDER}  PROJECT INFO${RESET}"
+  echo ""
+  icon_print "$ICON_FOLDER" "$NEON_CYAN" "Path:    ${FG_GRAY}$path${RESET}"
+  icon_print "$ICON_GIT" "$NEON_GREEN" "GitHub:  ${FG_GRAY}$github${RESET}"
+  icon_print "$ICON_FILE" "$ACCENT_SAPPHIRE" "Type:    ${FG_GRAY}$project_type${RESET}"
+  echo ""
+
+  # Progress
+  echo -e "${BOLD}${ACCENT_LAVENDER}  PROGRESS${RESET}"
+  echo ""
+  draw_progress_bar "$progress" 50 "Completion" true
+  echo ""
+
+  # Metrics
+  if ((loc > 0 || tokens > 0)); then
+    echo -e "${BOLD}${ACCENT_LAVENDER}  METRICS${RESET}"
+    echo ""
+
+    if ((loc > 0)); then
+      local loc_formatted=$(numfmt --to=si $loc 2>/dev/null || echo "$loc")
+      icon_print "$ICON_CODE" "$NEON_CYAN" "Lines of Code: ${BOLD}$loc_formatted${RESET}"
+    fi
+
+    if ((coverage > 0)); then
+      icon_print "$ICON_CHECK" "$NEON_GREEN" "Test Coverage: ${BOLD}${coverage}%${RESET}"
+    fi
+
+    if ((sessions > 0)); then
+      icon_print "$ICON_BRAIN" "$ACCENT_MAUVE" "Agent Sessions: ${BOLD}$sessions${RESET}"
+    fi
+
+    if ((tokens > 0)); then
+      local tokens_m=$((tokens / 1000000))
+      icon_print "$ICON_LIGHTNING" "$NEON_ORANGE" "Total Tokens: ${BOLD}${tokens_m}M${RESET}"
+
+      if ((loc > 0)); then
+        local tokens_per_line=$((tokens / loc))
+        icon_print "$ICON_GAUGE" "$ACCENT_SAPPHIRE" "Tokens/Line: ${BOLD}$tokens_per_line${RESET}"
+      fi
+    fi
+
+    echo ""
+  fi
+
+  # Actions menu
+  show_actions_menu "$project_name" "$path"
+}
+
+# ============================================================================
+# ACTIONS MENU
+# ============================================================================
+
+show_actions_menu() {
+  local project_name=$1
+  local path=$2
+
+  echo -e "${BOLD}${ACCENT_LAVENDER}  ACTIONS${RESET}"
+  echo ""
+
+  local actions=(
+    "1. Open in editor (code .)"
+    "2. Browse files${HAS_YAZI:+ (yazi)}"
+    "3. Show git status"
+    "4. View recent commits${HAS_DELTA:+ (delta)}"
+    "5. Open GitHub"
+    "6. Back to list"
+    "7. Exit"
+  )
+
+  for action in "${actions[@]}"; do
+    echo -e "  ${NEON_CYAN}${ICON_ARROW}${RESET} $action"
+  done
+
+  echo ""
+  echo -n "  ${FG_GRAY}Select action (1-7):${RESET} "
+  read choice
+
+  case "$choice" in
+    1)
+      cd "$path" && code .
+      ;;
+    2)
+      if [[ "$HAS_YAZI" == "yes" ]]; then
+        yazi "$path"
+      else
+        cd "$path" && ls -la
+      fi
+      ;;
+    3)
+      echo ""
+      git -C "$path" status
+      echo ""
+      echo -e "${FG_GRAY}Press Enter to continue...${RESET}"
+      read
+      show_project_detail "$project_name"
+      ;;
+    4)
+      echo ""
+      if [[ "$HAS_DELTA" == "yes" ]]; then
+        git -C "$path" log --oneline --color --since="1 week" -10 | delta
+      else
+        git -C "$path" log --oneline --since="1 week" -10
+      fi
+      echo ""
+      echo -e "${FG_GRAY}Press Enter to continue...${RESET}"
+      read
+      show_project_detail "$project_name"
+      ;;
+    5)
+      local github=$(jq -r ".projects[] | select(.name==\"$project_name\") | .github" "$REGISTRY_FILE")
+      if [[ "$github" != "N/A" ]] && [[ -n "$github" ]]; then
+        open "$github"
+      else
+        echo "No GitHub URL configured"
+      fi
+      ;;
+    6)
+      show_project_list
+      ;;
+    7)
+      exit 0
+      ;;
+    *)
+      echo "Invalid choice"
+      sleep 1
+      show_project_detail "$project_name"
+      ;;
+  esac
+}
+
+# ============================================================================
+# PROJECT LIST ROUTER
+# ============================================================================
+
+show_project_list() {
+  if [[ "$HAS_FZF" == "yes" ]]; then
+    show_project_list_fzf
+  elif [[ "$HAS_GUM" == "yes" ]]; then
+    show_project_list_gum
+  else
+    show_project_list_basic
+  fi
+}
+
+# ============================================================================
+# MAIN
+# ============================================================================
+
+main() {
+  # Check if registry exists
+  if [[ ! -f "$REGISTRY_FILE" ]]; then
+    echo "🔍 No project registry found. Scanning projects..."
+    $PSA_HOME/scripts/scan-projects.sh
+  fi
+
+  # Show overview
+  show_overview
+
+  # Show project list
+  echo -e "${FG_GRAY}  Press Enter to see project list...${RESET}"
+  read
+  show_project_list
+}
+
+main

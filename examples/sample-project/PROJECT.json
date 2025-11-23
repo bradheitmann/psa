@@ -1,0 +1,31 @@
+{
+  "meta": {
+    "name": "sample-project",
+    "displayName": "Sample Project",
+    "description": "A sample project demonstrating PSA integration",
+    "status": "active",
+    "type": "web-app",
+    "created": "2024-11-01T00:00:00Z",
+    "updated": "2024-11-21T00:00:00Z"
+  },
+  "location": {
+    "path": "~/projects/sample-project",
+    "github": "https://github.com/your-org/sample-project",
+    "pmSession": ".claude/sessions/main.jsonl"
+  },
+  "progress": {
+    "percentComplete": 65,
+    "currentPhase": "development",
+    "milestones": {
+      "total": 10,
+      "completed": 6,
+      "current": "Feature X Implementation"
+    }
+  },
+  "tech": {
+    "languages": ["TypeScript", "Python"],
+    "frameworks": ["React", "FastAPI"],
+    "runtime": "bun",
+    "packageManager": "pnpm"
+  }
+}

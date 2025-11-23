@@ -1,0 +1,254 @@
+#!/bin/bash
+
+# PSA (Project State Agent) CLI
+# Main entry point for all PSA commands
+
+set -e
+
+# Colors
+BOLD="\033[1m"
+GREEN="\033[32m"
+YELLOW="\033[33m"
+RED="\033[31m"
+BLUE="\033[34m"
+RESET="\033[0m"
+
+PSA_DIR="$HOME/.psa"
+SCRIPTS_DIR="$PSA_DIR/scripts"
+CACHE_FILE="$PSA_DIR/.update-check-cache"
+CACHE_AGE_SECONDS=86400  # 24 hours
+
+# Daily update check (runs in background, non-blocking)
+daily_update_check() {
+    # Skip for help command or if explicitly checking updates
+    if [ "$1" = "help" ] || [ "$1" = "check-updates" ] || [ "$1" = "check" ]; then
+        return
+    fi
+
+    # Check if cache exists and is recent
+    if [ -f "$CACHE_FILE" ]; then
+        CACHE_AGE=$(($(date +%s) - $(stat -f %m "$CACHE_FILE" 2>/dev/null || stat -c %Y "$CACHE_FILE" 2>/dev/null)))
+        if [ $CACHE_AGE -lt $CACHE_AGE_SECONDS ]; then
+            # Cache is fresh, skip check
+            return
+        fi
+    fi
+
+    # Run check in background (non-blocking)
+    (
+        # Quick check for outdated packages
+        PNPM_OUTDATED=$(npx pnpm outdated -g 2>/dev/null | tail -n +3 | head -5)
+        BREW_OUTDATED=$(brew outdated --formula 2>/dev/null | head -5)
+
+        if [ -n "$PNPM_OUTDATED" ] || [ -n "$BREW_OUTDATED" ]; then
+            echo -e "${YELLOW}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${RESET}"
+            echo -e "${YELLOW}📦 Updates available!${RESET}"
+            if [ -n "$PNPM_OUTDATED" ]; then
+                PNPM_COUNT=$(echo "$PNPM_OUTDATED" | wc -l | tr -d ' ')
+                echo -e "  ${CYAN}$PNPM_COUNT global tool(s) outdated${RESET}"
+            fi
+            if [ -n "$BREW_OUTDATED" ]; then
+                BREW_COUNT=$(echo "$BREW_OUTDATED" | wc -l | tr -d ' ')
+                echo -e "  ${CYAN}$BREW_COUNT system tool(s) outdated${RESET}"
+            fi
+            echo -e "  ${GREEN}Run: psa check-updates${RESET} to see details"
+            echo -e "${YELLOW}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${RESET}"
+            echo ""
+        fi
+
+        # Update cache timestamp
+        touch "$CACHE_FILE"
+    ) &
+}
+
+# Show help
+show_help() {
+    echo -e "${BOLD}${BLUE}PSA (Project State Agent) CLI${RESET}"
+    echo ""
+    echo "A meta-learning system for AI agent configurations and project tracking."
+    echo ""
+    echo -e "${BOLD}Usage:${RESET}"
+    echo "  psa <command> [arguments]"
+    echo ""
+    echo -e "${BOLD}Commands:${RESET}"
+    echo ""
+    echo -e "  ${GREEN}report${RESET} <loadout> <anecdote>"
+    echo "    Report a learning or observation about an agent loadout"
+    echo "    Example: psa report \"claude-sonnet-4-5\" \"Great at TypeScript refactoring\""
+    echo ""
+    echo -e "  ${GREEN}view-master${RESET}"
+    echo "    View the global AGENTS_MASTER.md configuration"
+    echo ""
+    echo -e "  ${GREEN}init-project${RESET} <name> [path]"
+    echo "    Initialize a new project with PSA tracking"
+    echo "    Example: psa init-project my-app ~/projects/my-app"
+    echo ""
+    echo -e "  ${GREEN}check-updates${RESET}"
+    echo "    Check for outdated packages (Homebrew + pnpm global)"
+    echo ""
+    echo -e "  ${GREEN}upgrade-global${RESET}"
+    echo "    Upgrade all global CLI tools (pnpm)"
+    echo ""
+    echo -e "  ${GREEN}upgrade-system${RESET}"
+    echo "    Upgrade all system tools (Homebrew)"
+    echo ""
+    echo -e "  ${GREEN}upgrade-all${RESET}"
+    echo "    Upgrade everything (global + system)"
+    echo ""
+    echo -e "  ${GREEN}context${RESET} [--llm|--copy|--update]"
+    echo "    Show current environment context for LLM agents"
+    echo "    --llm: Format for LLM prompts"
+    echo "    --copy: Copy to clipboard (macOS)"
+    echo "    --update: Update CLAUDE.md with current versions"
+    echo ""
+    echo -e "  ${GREEN}sync-protocols${RESET}"
+    echo "    Copy latest protocols from ~/.psa/ to current project"
+    echo ""
+    echo -e "  ${GREEN}bloat-scan${RESET}"
+    echo "    Scan project for deletable bloat and canonical candidates"
+    echo ""
+    echo -e "  ${GREEN}canonicalize${RESET} <story-name>"
+    echo "    Extract canonical examples from A-grade story"
+    echo "    Example: psa canonicalize story-05-llm-mvp"
+    echo ""
+    echo -e "  ${GREEN}dash${RESET}"
+    echo "    Show global project dashboard (all projects)"
+    echo ""
+    echo -e "  ${GREEN}report-terminal${RESET} <topic> <note>"
+    echo "    Report a learning or observation (terminal version)"
+    echo "    Example: psa report-terminal git \"Use --fixup for cleaner history\""
+    echo ""
+    echo -e "  ${GREEN}sync-to-project${RESET} [path]"
+    echo "    Sync PSA protocols and commands to project (preserves customizations)"
+    echo "    Example: psa sync-to-project ~/projects/my-app"
+    echo ""
+    echo -e "  ${GREEN}sync-all-projects${RESET}"
+    echo "    Sync PSA updates to all tracked projects"
+    echo ""
+    echo -e "  ${GREEN}update-self${RESET}"
+    echo "    Update PSA from GitHub (preserves local customizations)"
+    echo ""
+    echo -e "  ${GREEN}help${RESET}"
+    echo "    Show this help message"
+    echo ""
+    echo -e "${BOLD}Files:${RESET}"
+    echo "  Global Master:  ~/.psa/AGENTS_MASTER.md"
+    echo "  Project Config: ./AGENTS.md (in each project)"
+    echo ""
+    echo -e "${BOLD}More Info:${RESET}"
+    echo "  See ~/.psa/AGENTS_MASTER.md for loadout definitions"
+    echo "  See project-level AGENTS.md for project-specific guidance"
+    echo ""
+}
+
+# Check if PSA is initialized
+check_init() {
+    if [ ! -d "$PSA_DIR" ] || [ ! -f "$PSA_DIR/AGENTS_MASTER.md" ]; then
+        echo -e "${RED}Error: PSA not initialized${RESET}"
+        echo "PSA directory or AGENTS_MASTER.md not found."
+        echo ""
+        echo "This should have been set up automatically."
+        echo "If you're seeing this, something went wrong during installation."
+        exit 1
+    fi
+}
+
+# Parse command
+COMMAND="$1"
+shift || true
+
+# Run daily update check (background, non-blocking)
+daily_update_check "$COMMAND"
+
+case "$COMMAND" in
+    report)
+        check_init
+        "$SCRIPTS_DIR/report.sh" "$@"
+        ;;
+
+    view-master|view)
+        check_init
+        "$SCRIPTS_DIR/view-master.sh" "$@"
+        ;;
+
+    init-project|init)
+        check_init
+        "$SCRIPTS_DIR/init-project.sh" "$@"
+        ;;
+
+    check-updates|check)
+        check_init
+        "$SCRIPTS_DIR/check-updates.sh" "$@"
+        ;;
+
+    upgrade-global|upgrade-g)
+        check_init
+        "$SCRIPTS_DIR/upgrade-global.sh" "$@"
+        ;;
+
+    upgrade-system|upgrade-s)
+        check_init
+        "$SCRIPTS_DIR/upgrade-system.sh" "$@"
+        ;;
+
+    upgrade-all|upgrade)
+        check_init
+        "$SCRIPTS_DIR/upgrade-all.sh" "$@"
+        ;;
+
+    context|ctx)
+        check_init
+        "$SCRIPTS_DIR/context.sh" "$@"
+        ;;
+
+    sync-protocols|sync)
+        check_init
+        "$SCRIPTS_DIR/sync-protocols.sh" "$@"
+        ;;
+
+    bloat-scan)
+        check_init
+        "$SCRIPTS_DIR/bloat-scan.sh" "$@"
+        ;;
+
+    canonicalize)
+        check_init
+        "$SCRIPTS_DIR/canonicalize.sh" "$@"
+        ;;
+
+    dash|dashboard)
+        check_init
+        "$SCRIPTS_DIR/dashboard.sh" "$@"
+        ;;
+
+    report-terminal|report-t)
+        check_init
+        "$SCRIPTS_DIR/report.sh" "$@"
+        ;;
+
+    sync-to-project|sync-project)
+        check_init
+        "$SCRIPTS_DIR/sync-to-project.sh" "$@"
+        ;;
+
+    sync-all-projects|sync-all)
+        check_init
+        "$SCRIPTS_DIR/sync-all-projects.sh" "$@"
+        ;;
+
+    update-self|self-update)
+        check_init
+        "$SCRIPTS_DIR/update-self.sh" "$@"
+        ;;
+
+    help|--help|-h|"")
+        show_help
+        ;;
+
+    *)
+        echo -e "${RED}Error: Unknown command '$COMMAND'${RESET}"
+        echo ""
+        show_help
+        exit 1
+        ;;
+esac

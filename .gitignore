@@ -1,0 +1,30 @@
+# User data
+data/projects-registry.json
+data/PROJECTS.md
+data/COMMANDS.md
+data/HELP.md
+config.json
+
+# Cache
+.update-check-cache
+*.log
+
+# OS
+.DS_Store
+Thumbs.db
+.Spotlight-V100
+.Trashes
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Backup
+*.backup
+*.bak
+
+# Temp
+tmp/
+temp/
