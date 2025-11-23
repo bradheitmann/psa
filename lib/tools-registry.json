@@ -4,77 +4,75 @@
   "note": "Complete PSA development tools - comprehensive stack including AI, productivity, creative, and fun tools",
   "tools": {
     "languages": [
-      {"name": "node", "description": "Node.js JavaScript runtime", "install": "brew install node", "check": "node --version", "priority": "high"},
-      {"name": "bun", "description": "Fast JavaScript runtime", "install": "brew install bun", "check": "bun --version", "priority": "high"},
-      {"name": "python@3.14", "description": "Python 3.14", "install": "brew install python@3.14", "check": "python3 --version", "priority": "high"}
+      {"name": "node", "description": "Node.js JavaScript runtime", "install": "brew install node", "check": "node --version", "priority": "important"},
+      {"name": "bun", "description": "Fast JavaScript runtime", "install": "brew install bun", "check": "bun --version", "priority": "important"},
+      {"name": "python@3.14", "description": "Python 3.14", "install": "brew install python@3.14", "check": "python3 --version", "priority": "important"}
     ],
     "package_managers": [
-      {"name": "pnpm", "description": "Fast package manager", "install": "npx pnpm install -g pnpm", "check": "npx pnpm --version", "priority": "critical"},
-      {"name": "uv", "description": "Fast Python package manager", "install": "brew install uv", "check": "uv --version", "priority": "high"}
+      {"name": "pnpm", "description": "Fast package manager", "install": "npx pnpm install -g pnpm", "check": "npx pnpm --version", "priority": "important"},
+      {"name": "uv", "description": "Fast Python package manager", "install": "brew install uv", "check": "uv --version", "priority": "important"}
     ],
     "cli_power_tools": [
-      {"name": "ripgrep", "description": "Ultra-fast code search", "install": "brew install ripgrep", "check": "rg --version", "priority": "critical"},
-      {"name": "fzf", "description": "Fuzzy finder", "install": "brew install fzf", "check": "fzf --version", "priority": "critical"},
-      {"name": "fd", "description": "Fast find alternative", "install": "brew install fd", "check": "fd --version", "priority": "high"},
-      {"name": "bat", "description": "Cat with highlighting", "install": "brew install bat", "check": "bat --version", "priority": "medium"},
-      {"name": "eza", "description": "Modern ls", "install": "brew install eza", "check": "eza --version", "priority": "medium"},
-      {"name": "jq", "description": "JSON processor", "install": "brew install jq", "check": "jq --version", "priority": "high"},
-      {"name": "gum", "description": "Shell script UI", "install": "brew install gum", "check": "gum --version", "priority": "medium"}
+      {"name": "ripgrep", "description": "Ultra-fast code search", "install": "brew install ripgrep", "check": "rg --version", "priority": "important"},
+      {"name": "fzf", "description": "Fuzzy finder", "install": "brew install fzf", "check": "fzf --version", "priority": "important"},
+      {"name": "fd", "description": "Fast find alternative", "install": "brew install fd", "check": "fd --version", "priority": "important"},
+      {"name": "bat", "description": "Cat with highlighting", "install": "brew install bat", "check": "bat --version", "priority": "optional"},
+      {"name": "eza", "description": "Modern ls", "install": "brew install eza", "check": "eza --version", "priority": "optional"},
+      {"name": "jq", "description": "JSON processor", "install": "brew install jq", "check": "jq --version", "priority": "important"},
+      {"name": "gum", "description": "Shell script UI", "install": "brew install gum", "check": "gum --version", "priority": "optional"}
     ],
     "terminal_tools": [
-      {"name": "tmux", "description": "Terminal multiplexer", "install": "brew install tmux", "check": "tmux -V", "priority": "high"},
-      {"name": "btop", "description": "System monitor", "install": "brew install btop", "check": "btop --version", "priority": "low"},
-      {"name": "yazi", "description": "Terminal file manager", "install": "brew install yazi", "check": "yazi --version", "priority": "low"},
-      {"name": "zoxide", "description": "Smart directory jumper", "install": "brew install zoxide", "check": "zoxide --version", "priority": "medium"},
-      {"name": "starship", "description": "Fast shell prompt", "install": "brew install starship", "check": "starship --version", "priority": "low"}
+      {"name": "tmux", "description": "Terminal multiplexer", "install": "brew install tmux", "check": "tmux -V", "priority": "important"},
+      {"name": "btop", "description": "System monitor", "install": "brew install btop", "check": "btop --version", "priority": "optional"},
+      {"name": "yazi", "description": "Terminal file manager", "install": "brew install yazi", "check": "yazi --version", "priority": "optional"},
+      {"name": "zoxide", "description": "Smart directory jumper", "install": "brew install zoxide", "check": "zoxide --version", "priority": "optional"},
+      {"name": "starship", "description": "Fast shell prompt", "install": "brew install starship", "check": "starship --version", "priority": "optional"}
     ],
     "git_tools": [
-      {"name": "git", "description": "Version control", "install": "brew install git", "check": "git --version", "priority": "critical"},
-      {"name": "gh", "description": "GitHub CLI", "install": "brew install gh", "check": "gh --version", "priority": "high"},
-      {"name": "git-delta", "description": "Better git diffs", "install": "brew install git-delta", "check": "delta --version", "priority": "low"}
+      {"name": "git", "description": "Version control", "install": "brew install git", "check": "git --version", "priority": "important"},
+      {"name": "gh", "description": "GitHub CLI", "install": "brew install gh", "check": "gh --version", "priority": "important"},
+      {"name": "git-delta", "description": "Better git diffs", "install": "brew install git-delta", "check": "delta --version", "priority": "optional"}
     ],
     "agentic_ides": [
-      {"name": "claude-code", "description": "Claude Code CLI", "install": "brew install claude-code", "check": "claude --version", "priority": "critical"},
-      {"name": "cursor", "description": "Cursor AI IDE", "install": "brew install --cask cursor", "check": "test -d /Applications/Cursor.app && echo 'installed'", "priority": "high"},
-      {"name": "warp", "description": "Warp AI terminal", "install": "brew install --cask warp", "check": "test -d /Applications/Warp.app && echo 'installed'", "priority": "high"},
-      {"name": "visual-studio-code", "description": "VS Code", "install": "brew install --cask visual-studio-code", "check": "test -d /Applications/Visual\\ Studio\\ Code.app && echo 'installed'", "priority": "medium"},
-      {"name": "codex", "description": "OpenAI Codex CLI", "install": "brew install codex", "check": "codex --version", "priority": "medium"},
-      {"name": "opencode", "description": "OpenAI Code CLI", "install": "brew install opencode", "check": "opencode --version", "priority": "medium"},
-      {"name": "qwen-code", "description": "Qwen AI CLI", "install": "brew install qwen-code", "check": "qwen --version", "priority": "medium"},
-      {"name": "gemini-cli", "description": "Google Gemini CLI", "install": "brew install gemini-cli", "check": "gemini-cli --version", "priority": "medium"},
-      {"name": "ghostty", "description": "Fast GPU terminal", "install": "brew install --cask ghostty", "check": "test -d /Applications/Ghostty.app && echo 'installed'", "priority": "low"},
-      {"name": "antigravity", "description": "Google Antigravity AI", "install": "brew install --cask antigravity", "check": "test -d /Applications/Antigravity.app && echo 'installed'", "priority": "medium"},
-      {"name": "amp", "description": "Sourcegraph Amp AI", "install": "brew install --cask amp", "check": "test -d /Applications/Amp.app && echo 'installed'", "priority": "medium"},
-      {"name": "coderabbit", "description": "AI code review", "install": "brew install --cask coderabbit", "check": "coderabbit --version", "priority": "low"}
+      {"name": "claude-code", "description": "Claude Code CLI", "install": "brew install claude-code", "check": "claude --version", "priority": "important"},
+      {"name": "cursor", "description": "Cursor AI IDE", "install": "brew install --cask cursor", "check": "test -d /Applications/Cursor.app && echo 'installed'", "priority": "important"},
+      {"name": "warp", "description": "Warp AI terminal", "install": "brew install --cask warp", "check": "test -d /Applications/Warp.app && echo 'installed'", "priority": "important"},
+      {"name": "visual-studio-code", "description": "VS Code", "install": "brew install --cask visual-studio-code", "check": "test -d /Applications/Visual\\ Studio\\ Code.app && echo 'installed'", "priority": "optional"},
+      {"name": "codex", "description": "OpenAI Codex CLI", "install": "brew install codex", "check": "codex --version", "priority": "optional"},
+      {"name": "opencode", "description": "OpenAI Code CLI", "install": "brew install opencode", "check": "opencode --version", "priority": "optional"},
+      {"name": "qwen-code", "description": "Qwen AI CLI", "install": "brew install qwen-code", "check": "qwen --version", "priority": "optional"},
+      {"name": "gemini-cli", "description": "Google Gemini CLI", "install": "brew install gemini-cli", "check": "gemini-cli --version", "priority": "optional"},
+      {"name": "ghostty", "description": "Fast GPU terminal", "install": "brew install --cask ghostty", "check": "test -d /Applications/Ghostty.app && echo 'installed'", "priority": "optional"},
+      {"name": "antigravity", "description": "Google Antigravity AI", "install": "brew install --cask antigravity", "check": "test -d /Applications/Antigravity.app && echo 'installed'", "priority": "optional"},
+      {"name": "amp", "description": "Sourcegraph Amp AI", "install": "brew install --cask amp", "check": "test -d /Applications/Amp.app && echo 'installed'", "priority": "optional"},
+      {"name": "coderabbit", "description": "AI code review", "install": "brew install --cask coderabbit", "check": "coderabbit --version", "priority": "optional"}
     ],
     "media_creation": [
-      {"name": "silicon", "description": "Code screenshots", "install": "brew install silicon", "check": "silicon --version", "priority": "low"},
-      {"name": "vhs", "description": "Terminal GIF recorder", "install": "brew install vhs", "check": "vhs --version", "priority": "low"},
-      {"name": "ffmpeg", "description": "Video/audio processing", "install": "brew install ffmpeg", "check": "ffmpeg -version", "priority": "low"},
-      {"name": "imagemagick", "description": "Image processing", "install": "brew install imagemagick", "check": "convert --version", "priority": "low"}
+      {"name": "silicon", "description": "Code screenshots", "install": "brew install silicon", "check": "silicon --version", "priority": "optional"},
+      {"name": "vhs", "description": "Terminal GIF recorder", "install": "brew install vhs", "check": "vhs --version", "priority": "optional"},
+      {"name": "ffmpeg", "description": "Video/audio processing", "install": "brew install ffmpeg", "check": "ffmpeg -version", "priority": "optional"},
+      {"name": "imagemagick", "description": "Image processing", "install": "brew install imagemagick", "check": "convert --version", "priority": "optional"}
     ],
     "ascii_art_fun": [
-      {"name": "figlet", "description": "ASCII art text", "install": "brew install figlet", "check": "figlet --version", "priority": "low"},
-      {"name": "toilet", "description": "Colored ASCII art", "install": "brew install toilet", "check": "toilet --version", "priority": "low"},
-      {"name": "boxes", "description": "Text box drawing", "install": "brew install boxes", "check": "boxes --version", "priority": "low"},
-      {"name": "sl", "description": "Terminal steam locomotive", "install": "brew install sl", "check": "which sl", "priority": "low"},
-      {"name": "nyancat", "description": "Terminal nyan cat", "install": "brew install nyancat", "check": "which nyancat", "priority": "low"}
+      {"name": "figlet", "description": "ASCII art text", "install": "brew install figlet", "check": "figlet --version", "priority": "optional"},
+      {"name": "toilet", "description": "Colored ASCII art", "install": "brew install toilet", "check": "toilet --version", "priority": "optional"},
+      {"name": "boxes", "description": "Text box drawing", "install": "brew install boxes", "check": "boxes --version", "priority": "optional"},
     ],
     "specialized_utils": [
-      {"name": "gruyere", "description": "Port viewer/killer TUI", "install": "brew install gruyere", "check": "gruyere --version", "priority": "medium"},
-      {"name": "glow", "description": "Markdown renderer", "install": "brew install glow", "check": "glow --version", "priority": "low"},
-      {"name": "lf", "description": "Terminal file manager", "install": "brew install lf", "check": "lf --version", "priority": "low"},
-      {"name": "greptile", "description": "AI code search", "install": "npm install -g greptile", "check": "greptile --version", "priority": "low"}
+      {"name": "gruyere", "description": "Port viewer/killer TUI", "install": "brew install gruyere", "check": "gruyere --version", "priority": "optional"},
+      {"name": "glow", "description": "Markdown renderer", "install": "brew install glow", "check": "glow --version", "priority": "optional"},
+      {"name": "lf", "description": "Terminal file manager", "install": "brew install lf", "check": "lf --version", "priority": "optional"},
+      {"name": "greptile", "description": "AI code search", "install": "npm install -g greptile", "check": "greptile --version", "priority": "optional"}
     ],
     "docker_containers": [
-      {"name": "docker", "description": "Container platform", "install": "brew install --cask docker", "check": "docker --version", "priority": "high"}
+      {"name": "docker", "description": "Container platform", "install": "brew install --cask docker", "check": "docker --version", "priority": "important"}
     ],
     "global_js_tools": [
-      {"name": "@biomejs/biome", "description": "Fast linter/formatter", "install": "npx pnpm install -g @biomejs/biome", "check": "biome --version", "priority": "high"},
-      {"name": "vercel", "description": "Deployment CLI", "install": "npx pnpm install -g vercel", "check": "vercel --version", "priority": "medium"},
-      {"name": "@github/copilot", "description": "GitHub Copilot CLI", "install": "npx pnpm install -g @github/copilot", "check": "github-copilot-cli --version", "priority": "medium"},
-      {"name": "@sentry/cli", "description": "Sentry error tracking", "install": "npx pnpm install -g @sentry/cli", "check": "sentry-cli --version", "priority": "low"},
-      {"name": "trae", "description": "Trae AI agent CLI", "install": "npm install -g trae-cli", "check": "trae --version", "priority": "low"}
+      {"name": "@biomejs/biome", "description": "Fast linter/formatter", "install": "npx pnpm install -g @biomejs/biome", "check": "biome --version", "priority": "important"},
+      {"name": "vercel", "description": "Deployment CLI", "install": "npx pnpm install -g vercel", "check": "vercel --version", "priority": "optional"},
+      {"name": "@github/copilot", "description": "GitHub Copilot CLI", "install": "npx pnpm install -g @github/copilot", "check": "github-copilot-cli --version", "priority": "optional"},
+      {"name": "@sentry/cli", "description": "Sentry error tracking", "install": "npx pnpm install -g @sentry/cli", "check": "sentry-cli --version", "priority": "optional"},
+      {"name": "trae", "description": "Trae AI agent CLI", "install": "npm install -g trae-cli", "check": "trae --version", "priority": "optional"}
     ]
   },
   "install_tiers": {
@@ -82,6 +80,5 @@
     "tier_2_ai_tools": ["cursor", "warp", "codex", "opencode", "qwen-code", "gemini-cli", "antigravity", "amp", "visual-studio-code"],
     "tier_3_productivity": ["bat", "eza", "tmux", "git-delta", "zoxide", "starship", "gum", "gruyere", "@biomejs/biome", "vercel", "@github/copilot"],
     "tier_4_optional": ["btop", "yazi", "lf", "glow", "ghostty", "docker", "greptile", "@sentry/cli", "trae"],
-    "tier_5_creative": ["silicon", "vhs", "ffmpeg", "imagemagick", "figlet", "toilet", "boxes", "sl", "nyancat", "coderabbit"]
   }
 }
