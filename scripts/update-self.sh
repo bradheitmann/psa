@@ -52,7 +52,7 @@ check_remote() {
         echo ""
         echo "To enable updates from GitHub, add a remote:"
         echo "  cd $PSA_HOME"
-        echo "  git remote add origin https://github.com/username/psa.git"
+        echo "  git remote add origin https://github.com/bradheitmann/psa.git"
         echo ""
         read -p "Continue with local update only? (y/N) " -n 1 -r
         echo
