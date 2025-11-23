@@ -41,7 +41,7 @@ echo -e "${BOLD}Welcome to PSA!${RESET}"
 echo ""
 echo "PSA helps you:"
 echo "  • Track AI agent performance across projects"
-echo "  • Manage development tools and environments
+echo "  • Manage development tools and environments"
 echo "  • Follow MVC (Minimum Viable Context) protocol"
 echo "  • Build canonical example library"
 echo "  • Upgrade tools automatically"
