@@ -1,314 +1,92 @@
 {
-  "version": "1.0.1",
+  "version": "2.0.0",
   "last_updated": "2025-11-22",
-  "note": "PSA protocol tools - Core development stack for modern software engineering",
+  "note": "Complete PSA development tools - comprehensive stack for modern software engineering",
   "tools": {
     "languages": [
-      {
-        "name": "node",
-        "description": "Node.js JavaScript runtime",
-        "install": "brew install node",
-        "check": "node --version",
-        "required_by": ["JavaScript/TypeScript projects"],
-        "priority": "high"
-      },
-      {
-        "name": "bun",
-        "description": "Fast JavaScript runtime and package manager (Rust-based)",
-        "install": "brew install bun",
-        "check": "bun --version",
-        "required_by": ["Modern JavaScript/TypeScript projects", "o_bot"],
-        "priority": "high"
-      },
-      {
-        "name": "python@3.14",
-        "description": "Python 3.14 programming language",
-        "install": "brew install python@3.14",
-        "check": "python3 --version",
-        "required_by": ["Python projects", "AI/ML workflows"],
-        "priority": "high"
-      }
+      {"name": "node", "description": "Node.js JavaScript runtime", "install": "brew install node", "check": "node --version", "priority": "high"},
+      {"name": "bun", "description": "Fast JavaScript runtime (Rust-based)", "install": "brew install bun", "check": "bun --version", "priority": "high"},
+      {"name": "python@3.14", "description": "Python 3.14", "install": "brew install python@3.14", "check": "python3 --version", "priority": "high"}
     ],
     "package_managers": [
-      {
-        "name": "pnpm",
-        "description": "Fast, disk space efficient package manager (npm replacement)",
-        "install": "npx pnpm install -g pnpm",
-        "check": "npx pnpm --version",
-        "installed_via": "npm global (redirects from npm)",
-        "required_by": ["JavaScript/TypeScript global tools", "PSA protocol"],
-        "priority": "critical"
-      },
-      {
-        "name": "uv",
-        "description": "Fast Python package manager (10-100x faster than pip)",
-        "install": "brew install uv",
-        "check": "uv --version",
-        "required_by": ["Python projects"],
-        "priority": "high"
-      }
+      {"name": "pnpm", "description": "Fast package manager (npm replacement)", "install": "npx pnpm install -g pnpm", "check": "npx pnpm --version", "priority": "critical"},
+      {"name": "uv", "description": "Fast Python package manager", "install": "brew install uv", "check": "uv --version", "priority": "high"}
     ],
     "cli_power_tools": [
-      {
-        "name": "ripgrep",
-        "description": "Ultra-fast grep alternative (rg) - Rust-based",
-        "install": "brew install ripgrep",
-        "check": "rg --version",
-        "required_by": ["Code search", "/psa-shortcuts", "MVC development"],
-        "priority": "critical"
-      },
-      {
-        "name": "fzf",
-        "description": "Fuzzy finder for interactive terminal selection",
-        "install": "brew install fzf",
-        "check": "fzf --version",
-        "required_by": ["Interactive selection", "/psa-shortcuts", "Shell workflows"],
-        "priority": "critical"
-      },
-      {
-        "name": "fd",
-        "description": "Fast find alternative (Rust-based)",
-        "install": "brew install fd",
-        "check": "fd --version",
-        "required_by": ["File search", "/psa-shortcuts"],
-        "priority": "high"
-      },
-      {
-        "name": "bat",
-        "description": "Cat with syntax highlighting and git integration",
-        "install": "brew install bat",
-        "check": "bat --version",
-        "required_by": ["File viewing", "/psa-shortcuts"],
-        "priority": "medium"
-      },
-      {
-        "name": "eza",
-        "description": "Modern ls replacement with git awareness",
-        "install": "brew install eza",
-        "check": "eza --version",
-        "required_by": ["Directory listing", "/psa-shortcuts"],
-        "priority": "medium"
-      },
-      {
-        "name": "gh",
-        "description": "GitHub CLI for PR/issue management",
-        "install": "brew install gh",
-        "check": "gh --version",
-        "required_by": ["Git workflows", "PR management", "MVC development"],
-        "priority": "high"
-      },
-      {
-        "name": "tmux",
-        "description": "Terminal multiplexer for session management",
-        "install": "brew install tmux",
-        "check": "tmux -V",
-        "required_by": ["Long-running sessions", "Remote work"],
-        "priority": "medium"
-      },
-      {
-        "name": "btop",
-        "description": "Resource monitor with beautiful interface",
-        "install": "brew install btop",
-        "check": "btop --version",
-        "required_by": ["System monitoring"],
-        "priority": "low"
-      },
-      {
-        "name": "yazi",
-        "description": "Blazing fast terminal file manager (Rust-based)",
-        "install": "brew install yazi",
-        "check": "yazi --version",
-        "required_by": ["File management"],
-        "priority": "low"
-      },
-      {
-        "name": "jq",
-        "description": "JSON processor for command line",
-        "install": "brew install jq",
-        "check": "jq --version",
-        "required_by": ["JSON manipulation", "API work"],
-        "priority": "medium"
-      }
+      {"name": "ripgrep", "description": "Ultra-fast code search (rg)", "install": "brew install ripgrep", "check": "rg --version", "priority": "critical"},
+      {"name": "fzf", "description": "Fuzzy finder", "install": "brew install fzf", "check": "fzf --version", "priority": "critical"},
+      {"name": "fd", "description": "Fast find alternative", "install": "brew install fd", "check": "fd --version", "priority": "high"},
+      {"name": "bat", "description": "Cat with syntax highlighting", "install": "brew install bat", "check": "bat --version", "priority": "medium"},
+      {"name": "eza", "description": "Modern ls with git support", "install": "brew install eza", "check": "eza --version", "priority": "medium"},
+      {"name": "jq", "description": "JSON processor", "install": "brew install jq", "check": "jq --version", "priority": "high"},
+      {"name": "gum", "description": "Shell script UI components", "install": "brew install gum", "check": "gum --version", "priority": "medium"}
+    ],
+    "terminal_tools": [
+      {"name": "tmux", "description": "Terminal multiplexer", "install": "brew install tmux", "check": "tmux -V", "priority": "high"},
+      {"name": "btop", "description": "Beautiful system monitor", "install": "brew install btop", "check": "btop --version", "priority": "low"},
+      {"name": "yazi", "description": "Fast terminal file manager", "install": "brew install yazi", "check": "yazi --version", "priority": "low"},
+      {"name": "zoxide", "description": "Smart directory jumper", "install": "brew install zoxide", "check": "zoxide --version", "priority": "medium"},
+      {"name": "starship", "description": "Fast shell prompt", "install": "brew install starship", "check": "starship --version", "priority": "low"}
     ],
     "git_tools": [
-      {
-        "name": "git",
-        "description": "Version control system",
-        "install": "brew install git",
-        "check": "git --version",
-        "required_by": ["All development", "MVC protocol"],
-        "priority": "critical"
-      },
-      {
-        "name": "git-delta",
-        "description": "Syntax-highlighting pager for git/diff",
-        "install": "brew install git-delta",
-        "check": "delta --version",
-        "required_by": ["Git workflows", "Better diffs"],
-        "priority": "low"
-      }
+      {"name": "git", "description": "Version control", "install": "brew install git", "check": "git --version", "priority": "critical"},
+      {"name": "gh", "description": "GitHub CLI", "install": "brew install gh", "check": "gh --version", "priority": "high"},
+      {"name": "git-delta", "description": "Better git diffs", "install": "brew install git-delta", "check": "delta --version", "priority": "low"}
     ],
     "agentic_ides": [
-      {
-        "name": "claude-code",
-        "description": "Claude Code CLI by Anthropic",
-        "install": "brew install claude-code",
-        "check": "claude --version",
-        "required_by": ["MVC development", "PSA protocol"],
-        "priority": "critical"
-      },
-      {
-        "name": "cursor",
-        "description": "Cursor AI-powered IDE",
-        "install": "brew install --cask cursor",
-        "check": "/Applications/Cursor.app/Contents/MacOS/Cursor --version",
-        "required_by": ["AI-assisted development"],
-        "priority": "medium"
-      },
-      {
-        "name": "visual-studio-code",
-        "description": "VS Code editor",
-        "install": "brew install --cask visual-studio-code",
-        "check": "/Applications/Visual\\ Studio\\ Code.app/Contents/MacOS/Electron --version",
-        "required_by": ["General development"],
-        "priority": "medium"
-      },
-      {
-        "name": "warp",
-        "description": "Warp terminal with AI features",
-        "install": "brew install --cask warp",
-        "check": "/Applications/Warp.app/Contents/MacOS/stable --version",
-        "required_by": ["Terminal workflows", "AI assistance"],
-        "priority": "medium"
-      },
-      {
-        "name": "codex",
-        "description": "OpenAI Codex CLI",
-        "install": "brew install codex",
-        "check": "codex --version",
-        "required_by": ["AI coding assistance"],
-        "priority": "low"
-      },
-      {
-        "name": "coderabbit",
-        "description": "AI code review tool",
-        "install": "brew install --cask coderabbit",
-        "check": "coderabbit --version",
-        "required_by": ["Code review automation"],
-        "priority": "low"
-      }
+      {"name": "claude-code", "description": "Claude Code CLI", "install": "brew install claude-code", "check": "claude --version", "priority": "critical"},
+      {"name": "cursor", "description": "Cursor AI IDE", "install": "brew install --cask cursor", "check": "test -d /Applications/Cursor.app && echo 'installed'", "priority": "high"},
+      {"name": "warp", "description": "Warp AI terminal", "install": "brew install --cask warp", "check": "test -d /Applications/Warp.app && echo 'installed'", "priority": "high"},
+      {"name": "visual-studio-code", "description": "VS Code", "install": "brew install --cask visual-studio-code", "check": "test -d /Applications/Visual\\ Studio\\ Code.app && echo 'installed'", "priority": "medium"},
+      {"name": "codex", "description": "OpenAI Codex CLI", "install": "brew install codex", "check": "codex --version", "priority": "medium"},
+      {"name": "opencode", "description": "OpenAI Code CLI", "install": "brew install opencode", "check": "opencode --version", "priority": "medium"},
+      {"name": "qwen-code", "description": "Qwen AI CLI", "install": "brew install qwen-code", "check": "qwen --version", "priority": "medium"},
+      {"name": "gemini-cli", "description": "Google Gemini CLI", "install": "brew install gemini-cli", "check": "gemini-cli --version", "priority": "medium"},
+      {"name": "ghostty", "description": "Fast GPU-accelerated terminal", "install": "brew install --cask ghostty", "check": "test -d /Applications/Ghostty.app && echo 'installed'", "priority": "low"}
     ],
-    "global_coding_tools": [
-      {
-        "name": "@biomejs/biome",
-        "description": "Fast linter and formatter (Rust-based, replaces ESLint+Prettier)",
-        "install": "npx pnpm install -g @biomejs/biome",
-        "check": "biome --version",
-        "installed_via": "pnpm global",
-        "required_by": ["JavaScript/TypeScript linting"],
-        "priority": "high"
-      },
-      {
-        "name": "@kilocode/cli",
-        "description": "Kilocode AI coding assistant",
-        "install": "npx pnpm install -g @kilocode/cli",
-        "check": "kilocode --version",
-        "installed_via": "pnpm global",
-        "required_by": ["AI assistance"],
-        "priority": "low"
-      },
-      {
-        "name": "vercel",
-        "description": "Vercel deployment CLI",
-        "install": "npx pnpm install -g vercel",
-        "check": "vercel --version",
-        "installed_via": "pnpm global",
-        "required_by": ["Deployment workflows"],
-        "priority": "medium"
-      }
+    "media_creation": [
+      {"name": "silicon", "description": "Beautiful code screenshots", "install": "brew install silicon", "check": "silicon --version", "priority": "low"},
+      {"name": "vhs", "description": "Terminal GIF recorder", "install": "brew install vhs", "check": "vhs --version", "priority": "low"},
+      {"name": "ffmpeg", "description": "Video/audio processing", "install": "brew install ffmpeg", "check": "ffmpeg -version", "priority": "low"},
+      {"name": "imagemagick", "description": "Image processing", "install": "brew install imagemagick", "check": "convert --version", "priority": "low"}
     ],
-    "optional_enhancements": [
-      {
-        "name": "zoxide",
-        "description": "Smart directory jumper (replaces cd)",
-        "install": "brew install zoxide",
-        "check": "zoxide --version",
-        "required_by": ["Navigation shortcuts", "/psa-shortcuts"],
-        "priority": "medium"
-      },
-      {
-        "name": "starship",
-        "description": "Fast, customizable shell prompt",
-        "install": "brew install starship",
-        "check": "starship --version",
-        "required_by": ["Shell aesthetics"],
-        "priority": "low"
-      }
+    "ascii_art_fun": [
+      {"name": "figlet", "description": "ASCII art text generator", "install": "brew install figlet", "check": "figlet --version", "priority": "low"},
+      {"name": "toilet", "description": "Colored ASCII art", "install": "brew install toilet", "check": "toilet --version", "priority": "low"},
+      {"name": "boxes", "description": "Text box drawing", "install": "brew install boxes", "check": "boxes --version", "priority": "low"},
+      {"name": "sl", "description": "Terminal steam locomotive", "install": "brew install sl", "check": "which sl", "priority": "low"},
+      {"name": "nyancat", "description": "Terminal nyan cat", "install": "brew install nyancat", "check": "which nyancat", "priority": "low"}
+    ],
+    "specialized_utils": [
+      {"name": "gruyere", "description": "Port viewer/killer TUI", "install": "brew install gruyere", "check": "gruyere --version", "priority": "medium"},
+      {"name": "glow", "description": "Markdown renderer", "install": "brew install glow", "check": "glow --version", "priority": "low"},
+      {"name": "lf", "description": "Terminal file manager", "install": "brew install lf", "check": "lf --version", "priority": "low"}
+    ],
+    "docker_containers": [
+      {"name": "docker", "description": "Container platform", "install": "brew install --cask docker", "check": "docker --version", "priority": "high"}
+    ],
+    "global_js_tools": [
+      {"name": "@biomejs/biome", "description": "Fast linter/formatter", "install": "npx pnpm install -g @biomejs/biome", "check": "biome --version", "priority": "high"},
+      {"name": "vercel", "description": "Deployment CLI", "install": "npx pnpm install -g vercel", "check": "vercel --version", "priority": "medium"}
     ]
   },
-  "tools_to_remove": [
-    {
-      "name": "glow",
-      "reason": "Low value - most docs viewed in browser or IDE",
-      "command": "brew uninstall glow"
-    },
-    {
-      "name": "pipx",
-      "reason": "Replaced by uv for Python tool management",
-      "command": "brew uninstall pipx"
-    },
-    {
-      "name": "coderabbit",
-      "reason": "Not actively used, overlaps with other AI tools",
-      "command": "brew uninstall --cask coderabbit"
-    },
-    {
-      "name": "@kilocode/cli",
-      "reason": "Not actively used, have Claude Code and Codex",
-      "command": "npx pnpm uninstall -g @kilocode/cli"
-    },
-    {
-      "name": "netlify-cli",
-      "reason": "If not using Netlify, remove (keep Vercel)",
-      "command": "npx pnpm uninstall -g netlify-cli"
-    },
-    {
-      "name": "chrome-devtools-mcp",
-      "reason": "Specialized tool, remove if not using",
-      "command": "npx pnpm uninstall -g chrome-devtools-mcp"
-    }
-  ],
+  "install_tiers": {
+    "tier_1_essential": ["git", "node", "bun", "python@3.14", "pnpm", "uv", "ripgrep", "fzf", "fd", "gh", "jq", "claude-code"],
+    "tier_2_ai_tools": ["cursor", "warp", "codex", "opencode", "qwen-code", "gemini-cli", "visual-studio-code"],
+    "tier_3_productivity": ["bat", "eza", "tmux", "git-delta", "zoxide", "starship", "gum", "gruyere", "@biomejs/biome", "vercel"],
+    "tier_4_optional": ["btop", "yazi", "lf", "glow", "ghostty", "docker"],
+    "tier_5_creative": ["silicon", "vhs", "ffmpeg", "imagemagick", "figlet", "toilet", "boxes", "sl", "nyancat"]
+  },
   "install_order": [
-    "git",
-    "node",
-    "bun",
-    "python@3.14",
-    "uv",
-    "ripgrep",
-    "fzf",
-    "fd",
-    "gh",
-    "jq",
-    "bat",
-    "eza",
-    "tmux",
-    "claude-code",
-    "warp",
-    "cursor",
-    "visual-studio-code",
-    "codex",
-    "@biomejs/biome",
-    "vercel",
-    "zoxide",
-    "starship",
-    "git-delta",
-    "btop",
-    "yazi"
-  ],
-  "installation_notes": {
-    "pnpm": "Installed via npm global (which redirects to pnpm). Use 'npx pnpm' to invoke.",
-    "global_js_tools": "Use 'npx pnpm install -g <package>' per PSA PACKAGE-MANAGER protocol",
-    "python_tools": "Use 'uv' for projects, skip pipx",
-    "zed": "Not installed - add if needed: brew install --cask zed"
-  }
+    "git", "node", "bun", "python@3.14", "pnpm", "uv",
+    "ripgrep", "fzf", "fd", "gh", "jq", "bat", "eza", "tmux",
+    "claude-code", "cursor", "warp", "visual-studio-code",
+    "codex", "opencode", "qwen-code", "gemini-cli",
+    "@biomejs/biome", "vercel",
+    "git-delta", "zoxide", "starship", "gum", "gruyere",
+    "btop", "yazi", "lf", "glow", "ghostty",
+    "silicon", "vhs", "docker",
+    "ffmpeg", "imagemagick",
+    "figlet", "toilet", "boxes", "sl", "nyancat"
+  ]
 }
