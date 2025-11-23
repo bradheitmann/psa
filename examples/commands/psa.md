@@ -12,7 +12,7 @@ Read docs/PROJECT_STATE.md and current context, then format as beautiful markdow
 ---
 
 # ╔═══════════════════════════════════════════════════════╗
-# ║  OKOA LOAN INTAKE PLATFORM - PROJECT STATUS          ║
+# ║  EXAMPLE PROJECT PLATFORM - PROJECT STATUS           ║
 # ╚═══════════════════════════════════════════════════════╝
 
 **📅 Date:** [current timestamp]
@@ -189,4 +189,4 @@ Read docs/PROJECT_STATE.md and current context, then format as beautiful markdow
 
 ---
 
-**🚀 PSA-OKOA-001 │ Protocol v2.0 │ 3 agents active │ Codex analyzing in Cursor**
+**🚀 PSA-PROJ-001 │ Protocol v2.0 │ 3 agents active │ Codex analyzing in Cursor**

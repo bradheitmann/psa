@@ -132,7 +132,7 @@ Track agent activity and code efficiency in `PROJECT-METRICS.json`:
 
 ### Level 3: Evidence System (RECOMMENDED)
 
-Based on o_bot's proven approach:
+Based on flo_bot's proven approach:
 
 **Structure:**
 ```
@@ -589,7 +589,7 @@ The global dashboard should display:
   - Defined 4-level data collection framework
   - Established standard metrics (LOC, TPL, LPMT, etc.)
   - Created PROJECT.json and PROJECT-METRICS.json schemas
-  - Documented evidence system from o_bot
+  - Documented evidence system from flo_bot
   - Designed global registry format
 
 ---

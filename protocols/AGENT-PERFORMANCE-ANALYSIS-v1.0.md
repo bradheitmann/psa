@@ -351,7 +351,7 @@ psa analyze-performance [loadout] [project]
 ```bash
 psa compare-agents [loadout1] [loadout2] \
   --metric=TER \
-  --project=o_bot
+  --project=flo_bot
 
 # Shows:
 # - Side-by-side comparison
@@ -367,7 +367,7 @@ psa compare-agents [loadout1] [loadout2] \
 ```
 ~/.psa/performance-data/
 ├── GPT5-CODEX/
-│   ├── o_bot-2025-11-17.json
+│   ├── flo_bot-2025-11-17.json
 │   └── other-project-2025-11-20.json
 ├── CLAUDE-SONNET-45/
 │   └── project-2025-11-15.json
@@ -376,7 +376,7 @@ psa compare-agents [loadout1] [loadout2] \
 Format (JSON):
 {
   "agent": "GPT-5 Codex CLI",
-  "project": "o_bot",
+  "project": "flo_bot",
   "date": "2025-11-17",
   "stories": [
     {
@@ -576,7 +576,7 @@ Example:
 ```bash
 psa track \
   --agent="GPT-5 Codex CLI" \
-  --project="o_bot" \
+  --project="flo_bot" \
   --story="03" \
   --loc-prod=300 \
   --loc-test=450 \
@@ -594,7 +594,7 @@ psa track \
 
 ### Analyze Performance:
 ```bash
-psa analyze "GPT-5 Codex CLI" --project=o_bot
+psa analyze "GPT-5 Codex CLI" --project=flo_bot
 
 # Shows:
 # - Story-by-story trends
@@ -610,7 +610,7 @@ psa compare \
   "GPT-5 Codex CLI" \
   "Claude Sonnet 4.5 + Warp" \
   --metric=UAPS \
-  --project=o_bot
+  --project=flo_bot
 
 # Shows side-by-side UAPS scores
 ```
@@ -618,7 +618,7 @@ psa compare \
 ### Predict Performance:
 ```bash
 psa predict "GPT-5 Codex CLI" \
-  --project=o_bot \
+  --project=flo_bot \
   --story=04 \
   --based-on=trajectory
 
@@ -693,25 +693,25 @@ psa seed-agent "GPT-5 Codex CLI" --role="MVC Dev" --tech="Bun TypeScript"
 """
 Seeded Learnings for GPT-5 Codex CLI (MVC Dev on Bun/TS):
 
-Based on o_bot project performance (2025-11-17):
+Based on flo_bot project performance (2025-11-17):
 
 Expected Learning Curve:
 - Story 01: Expect C+ to B- (75-80) - evidence standards learning
 - Story 02: Expect B+ (85) - applying lessons
 - Story 03+: Expect A- to A (88-95) - protocol mastery
 
-Common Pitfalls (from o_bot agent):
+Common Pitfalls (from flo_bot agent):
 1. Don't fabricate verify.log - run actual commands, copy outputs
 2. Don't obsess over guardrail scripts - stay focused on story
 3. Git-diff files need actual output, not empty files
 
-Success Patterns (from o_bot agent):
+Success Patterns (from flo_bot agent):
 1. Use [CHECK-IN] when uncertain
 2. Follow TDD strictly (tests first)
 3. Evidence quality improves with each story
 4. 40% faster than estimates is achievable
 
-Optimal Metrics (from o_bot agent):
+Optimal Metrics (from flo_bot agent):
 - Target: 2.0+ LOC per 1K tokens
 - Target: <$12 per story (this stack)
 - Target: 200-250 LOC/hour
@@ -731,7 +731,7 @@ MVC Dev Role Fit: Excellent (A-) with PM oversight
 ```
 ~/.psa/performance-data/
 ├── GPT5-CODEX/
-│   └── o_bot-2025-11-17.json        # Raw metrics
+│   └── flo_bot-2025-11-17.json        # Raw metrics
 ├── CLAUDE-SONNET-45/
 │   └── [future projects]
 └── analysis/
@@ -819,7 +819,7 @@ MVC Dev Role Fit: Excellent (A-) with PM oversight
 5. **Report to PSA:**
    ```bash
    psa report "GPT-5 Codex + OpenAI CLI" \
-     "[o_bot - MVC Dev] Story 03: UAPS 80.8, TER 1.6, Cost $9.60, improving"
+     "[flo_bot - MVC Dev] Story 03: UAPS 80.8, TER 1.6, Cost $9.60, improving"
    ```
 
 ---

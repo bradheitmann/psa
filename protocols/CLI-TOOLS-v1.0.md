@@ -66,7 +66,7 @@ psa:update                # Update PSA to latest version
 ```bash
 psa                       # Open colorful dashboard
 psa list                  # Quick project list
-psa show o_bot            # View o_bot project details
+psa show flo_bot            # View flo_bot project details
 psa:init my-app           # Initialize new project
 psa:pm:review story-13    # Create PM review template
 psa:analyze:tokens        # View token usage report
