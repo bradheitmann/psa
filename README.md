@@ -1,147 +1,182 @@
-# PSA - Personal System Assistant
+# PSA - Project State Agent
 
 <p align="center">
   <img src="assets/psa_dashboard_logo.png" alt="PSA Logo" width="400"/>
 </p>
 
-<p align="center">
-  Beautiful terminal dashboard for managing Claude Code projects with metrics, visualizations, and agent tracking.
-</p>
+**Manage your coding projects with AI-powered workflows**
 
-<p align="center">
-  <a href="#features">Features</a> •
-  <a href="#installation">Installation</a> •
-  <a href="#quick-start">Quick Start</a> •
-  <a href="#documentation">Documentation</a> •
-  <a href="#contributing">Contributing</a>
-</p>
+For developers using Claude Code, Cursor, or other AI coding tools.
 
 ---
 
-## Features
-
-- 🎨 **Colorful ASCII Visualizations** - Bar charts, sparklines, gauges with rich color schemes
-- 📊 **Real-time Project Metrics** - LOC, test coverage, agent tokens, efficiency tracking
-- 🚀 **Multi-project Overview** - Global dashboard for all your projects
-- 💾 **Git Integration** - Track commits, branches, and activity
-- 📈 **Agent Efficiency Analysis** - Monitor Claude Code sessions and token usage
-- 🔍 **Interactive Navigation** - Powered by fzf for fuzzy searching
-- 🎯 **Evidence-Based Workflow** - PM reviews, dev handoffs, automated gates
-- ⚡ **Terminal-Agnostic** - Works in Warp, iTerm2, VS Code, SSH sessions
-
-## Screenshots
-
-[Coming soon]
-
-## Installation
-
-### Homebrew (Recommended for macOS/Linux)
+## 🚀 Quick Install (2 minutes)
 
 ```bash
-brew tap your-org/psa
-brew install psa
+# 1. Download PSA
+git clone https://github.com/bradheitmann/psa.git ~/.psa
+
+# 2. Run setup
+cd ~/.psa && ./install.sh
+
+# 3. Reload shell
+source ~/.zshrc
+
+# 4. Verify
+psa help
 ```
 
-### npm
+**Done!** PSA is ready.
+
+---
+
+## ✨ What You Get
+
+**In Claude Code, use these commands:**
+- `/psa-tools-list` - Check your dev tools
+- `/psa-tools-install` - Install missing tools
+- `/psa-shortcuts` - Terminal productivity shortcuts
+
+**In terminal:**
+```bash
+psa help              # Show all commands
+psa init-project      # Create new project
+psa update-self       # Update PSA from GitHub
+psa dash              # Global project dashboard
+psa sync-all-projects # Sync PSA updates to all projects
+```
+
+**New in v1.1.0:**
+- `psa update-self` - Smart update system with customization preservation
+- `psa sync-to-project` - Sync PSA to individual projects
+- `psa sync-all-projects` - Batch sync to all tracked projects
+- `/psa-help` - Comprehensive command reference in Claude Code
+- `/psa-shortcuts` - 500+ line terminal shortcuts guide
+
+---
+
+## 📁 Your Projects
+
+PSA creates: `~/dev_projects/` (customizable during setup)
+
+All your projects in one place. Easy to find, easy to manage.
 
 ```bash
-npm install -g @psa-cli/psa
+cd ~/dev_projects     # or: psa-projects
+psa init-project my-app
 ```
 
-### Manual Install
+---
+
+## 🔧 Tool Management
+
+**Check tools:**
+```
+/psa-tools-list
+```
+
+**Install missing:**
+```
+/psa-tools-install
+```
+
+**Update outdated:**
+```
+/psa-tools-update
+```
+
+Manages: git, node, python, ripgrep, fzf, and 20+ other tools via Homebrew.
+
+---
+
+## 📚 What PSA Does
+
+1. **Tool Management** - Install/update development tools
+2. **Project Organization** - All projects in one directory
+3. **Agent Tracking** - Track AI agent performance (optional)
+4. **MVC Protocol** - Follow best practices (optional)
+5. **Bloat Management** - Keep projects clean
+
+**Start simple.** Use what you need. Ignore the rest.
+
+---
+
+## 🆘 Help
+
+**In Claude Code:**
+```
+/psa-status         # Show PSA status
+/psa-shortcuts      # Terminal shortcuts
+/psa-update         # Update PSA
+```
+
+**In terminal:**
+```bash
+psa help
+```
+
+**Documentation:** All commands are self-documenting. Just run them!
+
+---
+
+## 🔄 Updating PSA
 
 ```bash
-git clone https://github.com/your-org/psa.git
-cd psa
-./install.sh
+psa update-self
 ```
 
-### One-liner
+Or in Claude Code:
+```
+/psa-update
+```
 
+**That's it!** PSA updates automatically from GitHub and syncs changes to all your projects.
+
+**After updating, sync to your projects:**
 ```bash
-curl -fsSL https://psa.dev/install.sh | bash
+psa sync-all-projects
 ```
 
-## Quick Start
+See `docs/UPDATE-PROCEDURES.md` for full update workflows.
 
+---
+
+## 💡 Pro Tips
+
+**Create project:**
 ```bash
-# View dashboard
-psa
-
-# Scan projects
-psa scan
-
-# List all projects
-psa list
-
-# View project details
-psa show my-project
-
-# Initialize new project
-psa:init my-new-project
-
-# Create PM review
-psa:pm:review story-13
+psa init-project my-app
 ```
 
-## Configuration
-
-PSA uses `~/.psa/config.json`:
-
-```json
-{
-  "projectDirs": ["~/projects", "~/work"],
-  "dashboardTheme": "catppuccin",
-  "defaultEditor": "code"
-}
-```
-
-Edit with: `psa:config:edit`
-
-## Documentation
-
-- [Installation Guide](docs/installation.md)
-- [Configuration](docs/configuration.md)
-- [Usage Guide](docs/usage.md)
-- [Contributing](CONTRIBUTING.md)
-- [Security](docs/security.md)
-
-## Dependencies
-
-**Required:**
-- `jq` - JSON processing
-- `git` - Version control
-
-**Optional (Enhanced Experience):**
-- `fzf` - Interactive fuzzy finder ⭐⭐⭐⭐⭐
-- `gum` - Modern TUI components ⭐⭐⭐⭐
-- `bat` - Syntax-highlighted viewer ⭐⭐⭐
-- `delta` - Beautiful git diffs ⭐⭐⭐
-- `eza` - Modern ls with icons ⭐⭐⭐
-- `yazi` - File manager TUI ⭐⭐⭐
-- `figlet` - ASCII art text ⭐⭐
-- `lolcat` - Rainbow colorizer ⭐⭐
-- `gnuplot` - Terminal charts ⭐⭐⭐
-
-Install all:
+**Navigate to projects:**
 ```bash
-brew install jq fzf gum bat git-delta eza yazi figlet lolcat gnuplot
+psa-projects
 ```
 
-## Contributing
+**Check tool status:**
+```
+/psa-tools-list
+```
 
-Contributions are welcome! Please read [CONTRIBUTING.md](CONTRIBUTING.md).
+**Power shortcuts:**
+```
+/psa-shortcuts
+```
+
+---
+
+## 📖 Learn More
+
+- **Tutorials:** `~/.psa/tutorials/`
+- **Examples:** `~/.psa/examples/`
+- **Protocols:** `~/.psa/protocols/`
+
+**Or just start using it.** PSA teaches as you go.
+
+---
 
 ## License
 
-MIT License - see [LICENSE](LICENSE)
+MIT © 2025
 
-## Acknowledgments
-
-- Inspired by modern CLI tools: `starship`, `bat`, `eza`
-- Designed for Claude Code workflows
-- Built with love for terminal enthusiasts
-
----
-
-**Made with ❤️ for the command line**
+**Questions?** Open an issue on GitHub.
