@@ -1,7 +1,7 @@
 # PSA - Personal System Assistant
 
 <p align="center">
-  <img src="docs/logo.png" alt="PSA Logo" width="200"/>
+  <img src="assets/psa_dashboard_logo.png" alt="PSA Logo" width="400"/>
 </p>
 
 <p align="center">
