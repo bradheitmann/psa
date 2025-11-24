@@ -393,7 +393,7 @@ main() {
   # Check if registry exists
   if [[ ! -f "$REGISTRY_FILE" ]]; then
     echo "🔍 No project registry found. Scanning projects..."
-    $PSA_HOME/scripts/scan-projects.sh
+    "${PSA_HOME:-$HOME/.psa}/scripts/scan-projects.sh"
   fi
 
   # Show overview

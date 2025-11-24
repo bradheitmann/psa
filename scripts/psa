@@ -128,6 +128,16 @@ show_help() {
     echo -e "  ${GREEN}update-self${RESET}"
     echo "    Update PSA from GitHub (preserves local customizations)"
     echo ""
+    echo -e "  ${GREEN}doctor${RESET}"
+    echo "    Run comprehensive environment health check"
+    echo ""
+    echo -e "  ${GREEN}init-env${RESET}"
+    echo "    Initialize shell environment (one-time setup)"
+    echo ""
+    echo -e "  ${GREEN}protocol-check${RESET} <command>"
+    echo "    Check if command is allowed by active protocols"
+    echo "    Example: psa protocol-check npm install"
+    echo ""
     echo -e "  ${GREEN}help${RESET}"
     echo "    Show this help message"
     echo ""
@@ -239,6 +249,21 @@ case "$COMMAND" in
     update-self|self-update)
         check_init
         "$SCRIPTS_DIR/update-self.sh" "$@"
+        ;;
+
+    doctor)
+        check_init
+        "$SCRIPTS_DIR/env-doctor.sh" "$@"
+        ;;
+
+    init-env|env-init)
+        check_init
+        "$SCRIPTS_DIR/init-env.sh" "$@"
+        ;;
+
+    protocol-check|check-protocol)
+        check_init
+        "$SCRIPTS_DIR/protocol-check.sh" "$@"
         ;;
 
     help|--help|-h|"")
